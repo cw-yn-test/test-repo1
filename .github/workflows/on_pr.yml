@@ -1,0 +1,45 @@
+name: Deploy Jobs For PR
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - 'release/**'
+      - stage
+      - main
+    paths:
+      - '.github/**'
+      - 'work/**'
+
+jobs:
+  develop:
+    name: Develop Action
+    if: ${{ github.base_ref == 'develop' }}
+    uses: ./.github/workflows/reuse.yml
+    secrets: inherit
+    with:
+      env_name: develop
+
+  release:
+    name: Release Action
+    if: ${{ startsWith(github.base_ref, 'release/') }}
+    uses: ./.github/workflows/reuse.yml
+    secrets: inherit
+    with:
+      env_name: release
+
+  stage:
+    name: Stage Action
+    if: ${{ github.base_ref == 'stage' }}
+    uses: ./.github/workflows/reuse.yml
+    secrets: inherit
+    with:
+      env_name: stage
+
+  prod:
+    name: Prod Action
+    if: ${{ github.base_ref == 'main' }}
+    uses: ./.github/workflows/reuse.yml
+    secrets: inherit
+    with:
+      env_name: prod

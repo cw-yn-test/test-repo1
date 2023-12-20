@@ -1,0 +1,19 @@
+name: Test Action
+
+inputs:
+  environmentName:
+    required: true
+    type: string
+  message:
+    required: true
+    type: string
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Echo Hello World
+      shell: bash
+      working-directory: ./
+      run: |
+        echo "Hello world. environment name: ${{ inputs.environmentName }}"
+        echo "${{ inputs.message }}"
