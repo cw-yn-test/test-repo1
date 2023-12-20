@@ -27,3 +27,12 @@ jobs:
         with:
           environmentName: ${{ env.environmentName }}
           message: ${{ env.MESSAGE }}
+        
+      - name: Create GitHub dispatch event
+        run: |
+          curl --request POST 'https://api.github.com/repos/cw-yn-test2/test-repo2/dispatches' \
+          --header 'Authorization: Bearer ${{secrets.MY_GITHUB_ACCESS_TOKEN}}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+            "event_type": "test-repo1-updated"
+          }'
