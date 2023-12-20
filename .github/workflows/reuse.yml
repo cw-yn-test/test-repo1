@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Test Action
-        uses: ./.github/actions/test-action
+        uses: ./.github/actions/test_action
         with:
           environmentName: ${{ env.environmentName }}
           message: ${{ env.MESSAGE }}
