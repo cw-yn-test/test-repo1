@@ -34,5 +34,6 @@ jobs:
           --header 'Authorization: Bearer ${{secrets.MY_GITHUB_ACCESS_TOKEN}}' \
           --header 'Content-Type: application/json' \
           --data-raw '{
-            "event_type": "test-repo1-updated"
+            "event_type": "test-repo1-updated",
+            "client_payload": { "customField": "customValue" }
           }'
