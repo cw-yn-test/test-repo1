@@ -1,0 +1,28 @@
+name: Tag and Release Jobs For Merge
+
+on:
+  pull_request:
+    branches:
+      - 'release/**'
+      - stage
+      - main
+    types:
+      - closed
+    paths:
+      - '.github/**'
+      - 'work/**'
+
+jobs:
+  goodbye:
+    name: Goodbye
+    if: ${{ github.event.pull_request.merged == true }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Echo Goodbye
+        shell: bash
+        working-directory: ./
+        run: |
+          echo "Goodbye!"

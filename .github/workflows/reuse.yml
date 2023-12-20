@@ -1,0 +1,29 @@
+name: Deploy Monitoring
+
+on:
+  workflow_call:
+    inputs:
+      env_name:
+        required: true
+        type: string
+
+env:
+  MESSAGE: abcdefg
+
+jobs:
+  greeting:
+    name: Greeting
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.env_name }}
+    env:
+      environmentName: ${{ vars.ENVIRONMENT_NAME }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Test Action
+        uses: ./.github/actions/test-action
+        with:
+          environmentName: ${{ env.environmentName }}
+          message: ${{ env.MESSAGE }}
