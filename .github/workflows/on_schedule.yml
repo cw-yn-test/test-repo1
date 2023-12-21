@@ -2,7 +2,7 @@ name: Action For Schedule
 
 on:
   schedule:
-    - cron: '*/2 * * * *'  # UTC
+    - cron: '*/15 * * * *'  # UTC
 
 # on:
 #   workflow_dispatch:
