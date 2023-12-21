@@ -1,4 +1,4 @@
-name: Tag and Release Jobs For Merge
+name: Action For Merge
 
 on:
   pull_request:
