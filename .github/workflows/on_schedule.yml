@@ -14,9 +14,13 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: bot
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set Branch Name
+        run: |
+          BRANCH_NAME="my-bot"
+          git checkout -b $BRANCH_NAME
 
       # PRが既に存在するかどうかをチェック
       - name: Check If PR Exists
