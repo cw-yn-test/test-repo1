@@ -36,6 +36,7 @@ jobs:
     
       - name: Commit Changes
         run: |
+          git pull
           git add .
           git commit -m "Automated update $(date +%Y-%m-%d)"
           git push --set-upstream origin my-bot
