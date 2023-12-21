@@ -38,11 +38,7 @@ jobs:
         run: |
           git add .
           git commit -m "Automated update $(date +%Y-%m-%d)"
-    
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          git push
 
       # PRが既に存在するかどうかをチェック
       - name: Check If PR Exists
