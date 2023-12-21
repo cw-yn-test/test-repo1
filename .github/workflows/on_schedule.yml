@@ -1,11 +1,11 @@
 name: Action For Schedule
 
-# on:
-#   schedule:
-#     - cron: '35 * * * *'  # UTC
-
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: '*/2 * * * *'  # UTC
+
+# on:
+#   workflow_dispatch:
 
 jobs:
   create-release-pr:
