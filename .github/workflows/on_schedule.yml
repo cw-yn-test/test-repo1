@@ -22,6 +22,7 @@ jobs:
           version=$(cat ./work/ubuntu_version)
           echo "UBUNTU_CURRENT_VERSION --> ${version}"
           echo "UBUNTU_CURRENT_VERSION=${version}" >> $GITHUB_ENV
+          lsb_release -a
 
       # - name: Set up Git
       #   run: |
