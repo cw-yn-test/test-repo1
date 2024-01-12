@@ -18,6 +18,7 @@ jobs:
       name: ${{ inputs.env_name }}
     env:
       environmentName: ${{ vars.ENVIRONMENT_NAME }}
+      AWS_REGION: ap-northeast-1
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -27,3 +28,13 @@ jobs:
         with:
           environmentName: ${{ env.environmentName }}
           message: ${{ env.MESSAGE }}
+
+      - name: AWS Credentials
+        uses: ./.github/actions/aws-credential
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Test Action
+        uses: ./.github/actions/test_action2

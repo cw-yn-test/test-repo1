@@ -1,0 +1,10 @@
+name: Test Action2
+
+runs:
+  using: 'composite'
+  steps:
+    - name: AWS Command Test
+      shell: bash
+      working-directory: ./
+      run: |
+        aws s3 ls
