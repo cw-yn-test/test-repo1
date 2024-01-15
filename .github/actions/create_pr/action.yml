@@ -38,9 +38,10 @@ runs:
       run: |
         title="[Ami Checker]Difference in AMI name from latest"
         base_branch=develop
-        echo "pr_count=$(gh pr list -S '${pr_title} in:title' -B $base_branch | wc -l)" >> $GITHUB_OUTPUT
-        echo "pr_title=$(title)" >> $GITHUB_OUTPUT
-        echo "pr_base_branch=$(base_branch)" >> $GITHUB_OUTPUT
+        count=$(gh pr list -S '${title} in:title' -B $base_branch | wc -l)
+        echo "pr_count=$count" >> $GITHUB_OUTPUT
+        echo "pr_title=$title" >> $GITHUB_OUTPUT
+        echo "pr_base_branch=$base_branch" >> $GITHUB_OUTPUT
 
     # PRを作成
     - name: Create PR
