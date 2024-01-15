@@ -49,6 +49,6 @@ runs:
       shell: bash
       run: >
         gh pr create
-        -B ${{ steps.check_pr_exists.outputs.pr_base_branch }}
-        -t '${{ steps.check_pr_exists.outputs.pr_title }}'
-        -b ""
+        --base ${{ steps.check_pr_exists.outputs.pr_base_branch }}
+        --title '${{ steps.check_pr_exists.outputs.pr_title }}'
+        --body ""
