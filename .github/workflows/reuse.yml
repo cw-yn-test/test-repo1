@@ -36,5 +36,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Test Action2
+      - name: Check Difference in AMI Name
         uses: ./.github/actions/test_action2
+
+      - name: Create PR
+        if: ${{ env.IS_DIFF_IN_AMI_NAME == 'true' }}
+        shell: bash
+        run: |
+          echo "AMI Name is different."

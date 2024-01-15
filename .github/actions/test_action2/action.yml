@@ -1,4 +1,4 @@
-name: Test Action2
+name: Check Difference in AMI Name
 
 runs:
   using: 'composite'
@@ -24,7 +24,7 @@ runs:
         echo "BASE_UBUNTU_AMI --> ${ami}"
         echo "BASE_UBUNTU_AMI=${ami}" >> $GITHUB_ENV
 
-    - name: Check Difference in AMI Name
+    - name: Check Difference
       id: check_diff_in_ami
       shell: bash
       env:
@@ -36,9 +36,3 @@ runs:
           else
             echo "IS_DIFF_IN_AMI_NAME=false" >> $GITHUB_ENV
           fi
-
-    - name: Create PR
-      if: ${{ env.IS_DIFF_IN_AMI_NAME == 'true' }}
-      shell: bash
-      run: |
-        echo "AMI Name is different."
