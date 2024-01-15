@@ -4,7 +4,6 @@ runs:
   using: 'composite'
   steps:
     - name: Latest AMI Name For ubuntu-jammy-22.04-amd64-server
-      id: latest_ami_name
       shell: bash
       working-directory: ./
       run: |
@@ -15,7 +14,7 @@ runs:
         --output text \
         | grep -o 'ubuntu-jammy-22.04-amd64-server-[^/]*')
         echo "Latest AMI Name --> ${ami_name}"
-        echo "ami_name=$ami_name" >> $GITHUB_OUTPUT
+        echo "Latest_AMI_Name=$ami_name" >> $GITHUB_ENV
         
     - name: Current Base AMI Name
       id: current_ami_name
@@ -30,7 +29,7 @@ runs:
       id: check_difference_in_ami_name
       shell: bash
       run: |
-          if [ "${{ steps.latest_ami_name.outputs.ami_name }}" != "${{ steps.current_ami_name.outputs.ami_name }}" ]; then
+          if [ "${{ env.Latest_AMI_Name }}" != "${{ steps.current_ami_name.outputs.ami_name }}" ]; then
             echo "IS_DIFF_IN_AMI_NAME=true" >> $GITHUB_ENV
           else
             echo "IS_DIFF_IN_AMI_NAME=false" >> $GITHUB_ENV
