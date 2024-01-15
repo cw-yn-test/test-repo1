@@ -14,11 +14,11 @@ runs:
       id: check_pr_exists
       shell: bash
       run: |
-        pr_title="[Ami Checker]Difference in AMI name from latest"
+        pr_title="[AMI Checker]Difference in AMI name from latest"
         pr_base_branch=develop
         pr_count=$(gh pr list --state open --search "${pr_title} in:title" --base $pr_base_branch | wc -l)
         if [ $pr_count -ne 0 ]; then
-          echo "[Ami Checker]PR already exists."
+          echo "[AMI Checker]PR already exists."
         fi
         echo "pr_count=$pr_count" >> $GITHUB_OUTPUT
         echo "pr_title=$pr_title" >> $GITHUB_OUTPUT
@@ -28,6 +28,7 @@ runs:
       if: ${{ steps.check_pr_exists.outputs.pr_count == 0 }}
       shell: bash
       run: |
+        git checkout ${{ steps.check_pr_exists.outputs.pr_base_branch }}
         git checkout -b ami-checker
 
     # AMIの値を変更する
