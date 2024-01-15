@@ -25,6 +25,7 @@ runs:
 
     - name: Check Difference in AMI Name
       id: check_diff_in_ami
+      shell: bash
       env:
         LATEST_UBUNTU_AMI: '${{ env.LATEST_UBUNTU_AMI }}'
         BASE_UBUNTU_AMI: '${{ env.BASE_UBUNTU_AMI }}'
@@ -37,5 +38,6 @@ runs:
 
     - name: Create PR
         if: steps.check_vars.outputs.check_diff_in_ami == 'true'
+        shell: bash
         run: |
          echo "AMI Name is different."
