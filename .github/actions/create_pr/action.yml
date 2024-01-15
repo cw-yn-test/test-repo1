@@ -16,11 +16,8 @@ runs:
       run: |
         pr_title="[Ami Checker]Difference in AMI name from latest"
         pr_base_branch=develop
-        count=$(gh pr list --state open --search "${pr_title} in:title" --base $pr_base_branch | wc -l)
-        echo "Count --> ${count}"
-        gh pr list --state open
-        echo "bbbbbbbbb"
-        echo "pr_count=$count" >> $GITHUB_OUTPUT
+        pr_count=$(gh pr list --state open --search "${pr_title} in:title" --base $pr_base_branch | wc -l)
+        echo "pr_count=$pr_count" >> $GITHUB_OUTPUT
         echo "pr_title=$pr_title" >> $GITHUB_OUTPUT
         echo "pr_base_branch=$pr_base_branch" >> $GITHUB_OUTPUT
 
