@@ -28,6 +28,7 @@ runs:
       run: |
         git checkout -b ami-checker
 
+    # AMIの値を変更する
     - name: Make Changes
       if: ${{ steps.check_pr_exists.outputs.pr_count == 0 }}
       shell: bash
