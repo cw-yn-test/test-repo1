@@ -31,7 +31,7 @@ runs:
       shell: bash
       run: |
           if [ "${{ steps.latest_ami_name.outputs.ami_name }}" != "${{ steps.current_ami_name.outputs.ami_name }}" ]; then
-            echo "is_diff=true" >> $GITHUB_OUTPUT
+            echo "IS_DIFF_IN_AMI_NAME=true" >> $GITHUB_ENV
           else
-            echo "is_diff=false" >> $GITHUB_OUTPUT
+            echo "IS_DIFF_IN_AMI_NAME=false" >> $GITHUB_ENV
           fi
