@@ -3,7 +3,7 @@ name: Test Action2
 runs:
   using: 'composite'
   steps:
-    - name: Latest AMI Image Name For ubuntu-jammy-22.04-amd64-server
+    - name: Latest AMI Name For ubuntu-jammy-22.04-amd64-server
       shell: bash
       working-directory: ./
       run: |
@@ -15,10 +15,27 @@ runs:
         echo "LATEST_UBUNTU_AMI --> ${latest_ami}"
         echo "LATEST_UBUNTU_AMI=${latest_ami}" >> $GITHUB_ENV
         
-    - name: Current Base AMI Image Name
+    - name: Current Base AMI Name
       shell: bash
       working-directory: ./work
       run: |
         ami=$(cat ./variables.json | jq -r .ubuntu_ami_version)
         echo "BASE_UBUNTU_AMI --> ${ami}"
         echo "BASE_UBUNTU_AMI=${ami}" >> $GITHUB_ENV
+
+    - name: Check Difference in AMI Name
+      id: check_diff_in_ami
+      env:
+        LATEST_UBUNTU_AMI: '${{ env.LATEST_UBUNTU_AMI }}'
+        BASE_UBUNTU_AMI: '${{ env.BASE_UBUNTU_AMI }}'
+      run: |
+          if [ "$LATEST_UBUNTU_AMI" != "$BASE_UBUNTU_AMI" ]; then
+            echo "::set-output name=isDiff::true"
+          else
+            echo "::set-output name=isDiff::false"
+          fi
+
+    - name: Create PR
+        if: steps.check_vars.outputs.check_diff_in_ami == 'true'
+        run: |
+         echo "AMI Name is different."
