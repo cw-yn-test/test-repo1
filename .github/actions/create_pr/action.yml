@@ -3,45 +3,46 @@ name: Create PR
 runs:
   using: 'composite'
   steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
     - name: Set up Git
       shell: bash
       run: |
         git config user.name "${{ github.actor }}"
         git config user.email "${{ github.actor }}@users.noreply.github.com"
 
-    - name: Set Branch Name
-      shell: bash
-      run: |
-        git checkout -b ami-checker
-
-    - name: Make Changes
-      shell: bash
-      working-directory: ./work
-      run: |
-        jq '.ubuntu_ami_version="${{ env.Latest_AMI_Name }}"' ./variables.json > tmp.json && mv tmp.json ./variables.json 
-  
-    - name: Commit Changes
-      shell: bash
-      working-directory: ./
-      run: |
-        git add .
-        git commit -m "Automated update $(date +%Y-%m-%d)"
-        git push --set-upstream origin ami-checker
-
-    # PRが既に存在するかどうかをチェック
+    # 同じタイトルのPRが既に存在するかどうかをチェック
     - name: Check If PR Already Exists
       id: check_pr_exists
       shell: bash
       run: |
         pr_title="[Ami Checker]Difference in AMI name from latest"
         pr_base_branch=develop
-        count=$(gh pr list -S '${pr_title} in:title' -B $pr_base_branch | wc -l)
+        count=$(gh pr list --state open --search '${pr_title} in:title' --base $pr_base_branch | wc -l)
+        echo "Count --> ${count}"
         echo "pr_count=$count" >> $GITHUB_OUTPUT
         echo "pr_title=$pr_title" >> $GITHUB_OUTPUT
         echo "pr_base_branch=$pr_base_branch" >> $GITHUB_OUTPUT
+
+    - name: Set Branch Name
+      if: ${{ steps.check_pr_exists.outputs.pr_count == 0 }}
+      shell: bash
+      run: |
+        git checkout -b ami-checker
+
+    - name: Make Changes
+      if: ${{ steps.check_pr_exists.outputs.pr_count == 0 }}
+      shell: bash
+      working-directory: ./work
+      run: |
+        jq '.ubuntu_ami_version="${{ env.Latest_AMI_Name }}"' ./variables.json > tmp.json && mv tmp.json ./variables.json 
+
+    - name: Commit Changes
+      if: ${{ steps.check_pr_exists.outputs.pr_count == 0 }}
+      shell: bash
+      working-directory: ./
+      run: |
+        git add .
+        git commit -m "Automated update $(date +%Y-%m-%d)"
+        git push --set-upstream origin ami-checker
 
     # PRを作成
     - name: Create PR
