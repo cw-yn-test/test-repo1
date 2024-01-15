@@ -1,0 +1,48 @@
+name: Create PR
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Set up Git
+      run: |
+        git config user.name "${{ github.actor }}"
+        git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+    - name: Set Branch Name
+      run: |
+        BRANCH_NAME="ami-checker"
+        git checkout -b $BRANCH_NAME
+
+    - name: Make Changes
+      shell: bash
+      working-directory: ./work
+      run: |
+        jq '.ubuntu_ami_version="${{ env.LATEST_UBUNTU_AMI }}"' ./variables.json > tmp.json && mv tmp.json ./variables.json 
+  
+    - name: Commit Changes
+      run: |
+        git add .
+        git commit -m "Automated update $(date +%Y-%m-%d)"
+        git push --set-upstream origin my-bot
+
+    # PRが既に存在するかどうかをチェック
+    - name: Check If PR Exists
+      id: check_pr
+      run: |
+        pr_title=[Ami Checker]Difference in AMI name from latest 
+        base_branch=develop
+        echo "::set-output name=count::$(gh pr list -S ${pr_title}' in:title' -B $base_branch | wc -l)"
+        echo "::set-output name=pr_title::$pr_title"
+        echo "::set-output name=base_branch::$base_branch"
+
+    # PRを作成
+    - name: Create PR
+      if: ${{ steps.check_pr.outputs.count == 0 }}
+      run: |
+        gh pr create \
+        -B ${{ steps.check_pr.outputs.base_branch }} \
+        -t ${{ steps.check_pr.outputs.pr_title }} \
+        -b ""
