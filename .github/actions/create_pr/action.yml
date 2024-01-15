@@ -18,7 +18,9 @@ runs:
         pr_base_branch=develop
         count=$(gh pr list --state open --search '${pr_title} in:title' --base $pr_base_branch | wc -l)
         echo "Count --> ${count}"
-        gh pr list
+        gh pr list --state open
+        gh pr list --state open --search '${pr_title} in:title' --base $pr_base_branch
+        echo "bbbbbbbbb"
         echo "pr_count=$count" >> $GITHUB_OUTPUT
         echo "pr_title=$pr_title" >> $GITHUB_OUTPUT
         echo "pr_base_branch=$pr_base_branch" >> $GITHUB_OUTPUT
