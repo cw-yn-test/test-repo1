@@ -31,7 +31,7 @@ runs:
         git commit -m "Automated update $(date +%Y-%m-%d)"
         git push --set-upstream origin ami-checker
 
-    # PRが既に存在するかどうかをチェック
+    # 同じタイトルのPRが既に存在するかどうかをチェック
     - name: Check If PR Already Exists
       id: check_pr_exists
       shell: bash
