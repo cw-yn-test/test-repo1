@@ -17,6 +17,6 @@ runs:
       shell: bash
       working-directory: ./work
       run: |
-        ami=$(cat ./variables.json | jq -r .version)
+        ami=$(cat ./variables.json | jq -r .ubuntu_ami_version)
         echo "BASE_UBUNTU_AMI --> ${ami}"
         echo "BASE_UBUNTU_AMI=${ami}" >> $GITHUB_ENV
