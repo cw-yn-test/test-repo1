@@ -23,19 +23,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Test Action
-        uses: ./.github/actions/test_action
-        with:
-          environmentName: ${{ env.environmentName }}
-          message: ${{ env.MESSAGE }}
-
       - name: AWS Credentials
-        # uses: ./.github/actions/aws-credential
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-region: ${{ env.AWS_REGION }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Test Action
-        uses: ./.github/actions/test_action2
+      - name: Check Difference in AMI Name
+        uses: ./.github/actions/check_diff_in_ami
+
+      - name: Create PR
+        if: ${{ env.IS_DIFF_IN_AMI_NAME == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ./.github/actions/create_pr
