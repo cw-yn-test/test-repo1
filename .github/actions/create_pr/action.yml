@@ -21,7 +21,7 @@ runs:
       shell: bash
       working-directory: ./work
       run: |
-        jq '.ubuntu_ami_version="${{ env.LATEST_UBUNTU_AMI }}"' ./variables.json > tmp.json && mv tmp.json ./variables.json 
+        jq '.ubuntu_ami_version="${{ env.Latest_AMI_Name }}"' ./variables.json > tmp.json && mv tmp.json ./variables.json 
   
     - name: Commit Changes
       shell: bash
