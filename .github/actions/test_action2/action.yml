@@ -36,8 +36,8 @@ runs:
             echo "::set-output name=isDiff::false"
           fi
 
-    - name: Create PR
-        if: steps.check_vars.outputs.check_diff_in_ami == 'true'
-        shell: bash
-        run: |
-         echo "AMI Name is different."
+    # - name: Create PR
+    #     if: steps.check_vars.outputs.check_diff_in_ami == 'true'
+    #     shell: bash
+    #     run: |
+    #      echo "AMI Name is different."
