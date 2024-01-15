@@ -31,9 +31,9 @@ runs:
         BASE_UBUNTU_AMI: '${{ env.BASE_UBUNTU_AMI }}'
       run: |
           if [ "$LATEST_UBUNTU_AMI" != "$BASE_UBUNTU_AMI" ]; then
-            echo "::set-output name=isDiff::true"
+            echo "IS_DIFF_IN_AMI_NAME=true" >> $GITHUB_ENV
           else
-            echo "::set-output name=isDiff::false"
+            echo "IS_DIFF_IN_AMI_NAME=false" >> $GITHUB_ENV
           fi
 
     # - name: Create PR
