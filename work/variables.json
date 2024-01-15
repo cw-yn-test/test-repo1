@@ -1,4 +1,3 @@
 {
-    "weekday": "sunday",
-    "flavor": "mint"
+    "ubuntu_ami_version": "ubuntu-jammy-22.04-amd64-server-20230516"
 }
