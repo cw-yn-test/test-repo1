@@ -42,7 +42,7 @@ runs:
       run: |
         git add .
         git commit -m "Automated update $(date +%Y-%m-%d)"
-        git push --set-upstream origin ami-checker
+        git push --force --set-upstream origin ami-checker
 
     # PRを作成
     - name: Create PR
