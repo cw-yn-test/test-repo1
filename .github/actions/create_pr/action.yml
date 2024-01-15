@@ -36,12 +36,12 @@ runs:
       id: check_pr_exists
       shell: bash
       run: |
-        title="[Ami Checker]Difference in AMI name from latest"
-        base_branch=develop
-        count=$(gh pr list -S '${title} in:title' -B $base_branch | wc -l)
+        pr_title="[Ami Checker]Difference in AMI name from latest"
+        pr_base_branch=develop
+        count=$(gh pr list -S '${pr_title} in:title' -B $pr_base_branch | wc -l)
         echo "pr_count=$count" >> $GITHUB_OUTPUT
-        echo "pr_title=$title" >> $GITHUB_OUTPUT
-        echo "pr_base_branch=$base_branch" >> $GITHUB_OUTPUT
+        echo "pr_title=$pr_title" >> $GITHUB_OUTPUT
+        echo "pr_base_branch=$pr_base_branch" >> $GITHUB_OUTPUT
 
     # PRを作成
     - name: Create PR

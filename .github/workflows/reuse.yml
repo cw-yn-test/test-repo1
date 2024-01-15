@@ -34,7 +34,7 @@ jobs:
         uses: ./.github/actions/check_diff_in_ami
 
       - name: Create PR
-        if: ${{ env.IS_DIFF_IN_AMI_NAME == 'true' }}
+        if: ${{ steps.check_difference_in_ami_name.outputs.is_diff == 'true' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: ./.github/actions/create_pr
