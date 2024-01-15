@@ -3,33 +3,11 @@ name: Create PR
 runs:
   using: 'composite'
   steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
     - name: Set up Git
       shell: bash
       run: |
         git config user.name "${{ github.actor }}"
         git config user.email "${{ github.actor }}@users.noreply.github.com"
-
-    - name: Set Branch Name
-      shell: bash
-      run: |
-        git checkout -b ami-checker
-
-    - name: Make Changes
-      shell: bash
-      working-directory: ./work
-      run: |
-        jq '.ubuntu_ami_version="${{ env.Latest_AMI_Name }}"' ./variables.json > tmp.json && mv tmp.json ./variables.json 
-  
-    - name: Commit Changes
-      shell: bash
-      working-directory: ./
-      run: |
-        git add .
-        git commit -m "Automated update $(date +%Y-%m-%d)"
-        git push --set-upstream origin ami-checker
 
     # 同じタイトルのPRが既に存在するかどうかをチェック
     - name: Check If PR Already Exists
@@ -42,6 +20,28 @@ runs:
         echo "pr_count=$count" >> $GITHUB_OUTPUT
         echo "pr_title=$pr_title" >> $GITHUB_OUTPUT
         echo "pr_base_branch=$pr_base_branch" >> $GITHUB_OUTPUT
+
+    - name: Set Branch Name
+      if: ${{ steps.check_pr_exists.outputs.pr_count == 0 }}
+      shell: bash
+      run: |
+        git checkout -b ami-checker
+
+    - name: Make Changes
+      if: ${{ steps.check_pr_exists.outputs.pr_count == 0 }}
+      shell: bash
+      working-directory: ./work
+      run: |
+        jq '.ubuntu_ami_version="${{ env.Latest_AMI_Name }}"' ./variables.json > tmp.json && mv tmp.json ./variables.json 
+
+    - name: Commit Changes
+      if: ${{ steps.check_pr_exists.outputs.pr_count == 0 }}
+      shell: bash
+      working-directory: ./
+      run: |
+        git add .
+        git commit -m "Automated update $(date +%Y-%m-%d)"
+        git push --set-upstream origin ami-checker
 
     # PRを作成
     - name: Create PR
