@@ -1,0 +1,38 @@
+name: Check Difference in AMI Name
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Latest AMI Name For ubuntu-jammy-22.04-amd64-server
+      shell: bash
+      working-directory: ./
+      run: |
+        latest_ami=$(aws ec2 describe-images \
+        --owners 099720109477 \
+        --filters "Name=name,Values=ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*" \
+        --query 'Images | sort_by(@, &CreationDate) | [-1].[Name]' \
+        --output text \
+        | grep -o 'ubuntu-jammy-22.04-amd64-server-[^/]*')
+        echo "LATEST_UBUNTU_AMI --> ${latest_ami}"
+        echo "LATEST_UBUNTU_AMI=${latest_ami}" >> $GITHUB_ENV
+        
+    - name: Current Base AMI Name
+      shell: bash
+      working-directory: ./work
+      run: |
+        ami=$(cat ./variables.json | jq -r .ubuntu_ami_version)
+        echo "BASE_UBUNTU_AMI --> ${ami}"
+        echo "BASE_UBUNTU_AMI=${ami}" >> $GITHUB_ENV
+
+    - name: Check Difference
+      id: check_diff_in_ami
+      shell: bash
+      env:
+        LATEST_UBUNTU_AMI: '${{ env.LATEST_UBUNTU_AMI }}'
+        BASE_UBUNTU_AMI: '${{ env.BASE_UBUNTU_AMI }}'
+      run: |
+          if [ "$LATEST_UBUNTU_AMI" != "$BASE_UBUNTU_AMI" ]; then
+            echo "IS_DIFF_IN_AMI_NAME=true" >> $GITHUB_ENV
+          else
+            echo "IS_DIFF_IN_AMI_NAME=false" >> $GITHUB_ENV
+          fi
