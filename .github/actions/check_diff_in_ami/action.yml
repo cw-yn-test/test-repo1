@@ -15,7 +15,7 @@ runs:
         --output text \
         | grep -o 'ubuntu-jammy-22.04-amd64-server-[^/]*')
         echo "Latest AMI Name --> ${ami_name}"
-        echo "ami_name=$latest_ami_name" >> $GITHUB_OUTPUT
+        echo "ami_name=$ami_name" >> $GITHUB_OUTPUT
         
     - name: Current Base AMI Name
       id: current_ami_name
