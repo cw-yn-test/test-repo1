@@ -37,8 +37,8 @@ runs:
             echo "IS_DIFF_IN_AMI_NAME=false" >> $GITHUB_ENV
           fi
 
-    # - name: Create PR
-    #     if: steps.check_vars.outputs.check_diff_in_ami == 'true'
-    #     shell: bash
-    #     run: |
-    #      echo "AMI Name is different."
+    - name: Create PR
+      if: ${{ env.IS_DIFF_IN_AMI_NAME == 'true' }}
+      shell: bash
+      run: |
+        echo "AMI Name is different."
