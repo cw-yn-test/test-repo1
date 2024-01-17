@@ -28,7 +28,9 @@ runs:
       if: ${{ steps.check_pr_exists.outputs.pr_count == 0 }}
       shell: bash
       run: |
-        git checkout -b ami-checker
+        current_datetime=$(date +'%Y%m%d%H%M%S')
+        branch_name="ami-checker-${current_datetime}"
+        git checkout -b "$branch_name"
 
     # AMIの値を変更する
     - name: Make Changes
@@ -45,7 +47,7 @@ runs:
       run: |
         git add .
         git commit -m "Automated update $(date +%Y-%m-%d)"
-        git push --force --set-upstream origin ami-checker
+        git push --set-upstream origin ami-checker
 
     # PRを作成
     - name: Create PR
