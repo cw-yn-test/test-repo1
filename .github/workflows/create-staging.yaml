@@ -24,8 +24,16 @@ jobs:
 
           curl \
             -X POST \
-            -H "Authorization: Bearer ${{secrets.MY_GITHUB_ACCESS_TOKEN}}" \
+            -H "Authorization: token ${{secrets.MY_GITHUB_ACCESS_TOKEN}}" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/$OWNER/$REPO/dispatches \
             -d '{"event_type":"test-sasaki","client_payload":{"env": "sasaki-dev"}}'  
-      
+      - name: Create GitHub dispatch event
+        run: |
+          curl --request POST 'https://api.github.com/repos/cw-yn-test2/test-repo2/dispatches' \
+          --header 'Authorization: Bearer ${{secrets.MY_GITHUB_ACCESS_TOKEN}}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+            "event_type": "test-repo1-updated",
+            "client_payload": { "customField": "sasaki-test" }
+          }'
