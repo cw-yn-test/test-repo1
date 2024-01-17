@@ -1,0 +1,30 @@
+name: test 
+
+on:
+  push:
+    tags:
+      - '*release-[0-9]+.[0-9]+.[0-9]+'
+      - '*release-[0-9]+.[0-9]+.*'
+  workflow_dispatch:
+    inputs:
+      deploy_image_tag:
+        description: deploy image tag
+        type: string
+        default: latest
+
+jobs:
+  run-repository-dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Curl Api
+        run: |
+          TOKEN=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
+          OWNER=cw-yn-test2
+          REPO=test-repo2
+
+          curl \
+            -X POST \
+            -H "Authorization: token $TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/$OWNER/$REPO/dispatches \
+            -d '{"event_type":"test-repo1-updated","client_payload":{"env": "dev"}}'  
