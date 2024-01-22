@@ -3,6 +3,7 @@ name: Action For Merge
 on:
   pull_request:
     branches:
+      - develop # for debug
       - 'release/**'
       - stage
       - main
