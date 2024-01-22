@@ -23,16 +23,28 @@ jobs:
 
       - name: Echo Goodbye
         shell: bash
-        working-directory: ./
+        working-directory: ./work
         run: |
+          pwd
           echo "Goodbye!"
 
-      - name: Create GitHub dispatch event
+      - name: Check PR state
+        shell: bash
+        working-directory: ./work
         run: |
-          curl --request POST 'https://api.github.com/repos/cw-yn-test2/test-repo2/dispatches' \
-          --header 'Authorization: Bearer ${{secrets.MY_GITHUB_ACCESS_TOKEN}}' \
-          --header 'Content-Type: application/json' \
-          --data-raw '{
-            "event_type": "test-repo1-updated",
-            "client_payload": { "customField": "customValue" }
-          }'
+          if [[ "${{ github.event.pull_request.merged }}" == "true" && "${{ github.event.pull_request.title }}" == "[AMI Checker]Difference in AMI name from latest" ]]; then
+          echo "PR with the specified title has been merged, continue with your workflow steps..."
+          # ここに実行したいコマンドやスクリプトを記述します
+          else
+            echo "PR does not meet the criteria, exiting..."
+          fi
+
+      # - name: Create GitHub dispatch event
+      #   run: |
+      #     curl --request POST 'https://api.github.com/repos/cw-yn-test2/test-repo2/dispatches' \
+      #     --header 'Authorization: Bearer ${{secrets.MY_GITHUB_ACCESS_TOKEN}}' \
+      #     --header 'Content-Type: application/json' \
+      #     --data-raw '{
+      #       "event_type": "test-repo1-updated",
+      #       "client_payload": { "customField": "customValue" }
+      #     }'
