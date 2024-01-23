@@ -14,7 +14,7 @@ runs:
       id: check_pr_exists
       shell: bash
       run: |
-        pr_title="[AMI Checker]Difference in AMI name from latest"
+        pr_title="[AMI Checker]Difference in AMI name from latest. (--->${{ env.Latest_AMI_Name }})"
         pr_base_branch=${{ env.BASE_BRANCH }}
         pr_count=$(gh pr list --state open --search "${pr_title} in:title" --base $pr_base_branch | wc -l)
         if [ $pr_count -ne 0 ]; then
