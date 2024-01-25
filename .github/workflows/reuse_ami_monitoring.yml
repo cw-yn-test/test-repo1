@@ -28,6 +28,6 @@ jobs:
 
       - name: Create PR
         if: ${{ env.IS_DIFF_IN_AMI_NAME == 'true' }}
-        # env:
-        #   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: ./.github/actions/create_pr
