@@ -5,9 +5,20 @@ on:
     - cron: '0 0 * * *'  # UTC
 
   workflow_dispatch:
+    inputs:
+      env_name:
+        type: choice
+        description: 'Choose environment name'
+        options:
+          - develop
+          - stage
+          - production
+        default: develop
 
 jobs:
   dispatch_action:
     name: Dispatch Action
     uses: ./.github/workflows/reuse_ami_monitoring.yml
     secrets: inherit
+    with:
+      env_name: ${{ inputs.env_name || 'develop' }}
