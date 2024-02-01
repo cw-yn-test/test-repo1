@@ -17,7 +17,7 @@ on:
 jobs:
   dispatch_action:
     name: Dispatch Action
-    uses: cw-yn-test2/test-repo2/.github/workflows/reuse.yml@develop
+    uses: cw-yn-test2/test-repo2/.github/workflows/reuse2.yml@develop
     secrets: inherit
     with:
       env_name: ${{ inputs.env_name }}
