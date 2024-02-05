@@ -12,7 +12,6 @@ permissions:
   contents: write # writeにしなければgit pushでエラーが発生する
   pull-requests: write # writeにしなければPR作成でエラーが発生する
 
-
 jobs:
   greeting:
     name: Greeting
@@ -58,7 +57,7 @@ jobs:
 
       - name: Commit and Push changes to Repository B
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.MY_GITHUB_ACCESS_TOKEN }}
         run: |
           cd test-repo2
           git config user.name "${{ github.actor }}"
