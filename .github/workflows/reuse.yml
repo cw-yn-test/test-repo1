@@ -7,6 +7,9 @@ on:
         required: true
         type: string
 
+permissions:
+  pull-requests: write # writeにしなければPR作成でエラーが発生する
+
 jobs:
   greeting:
     name: Greeting
