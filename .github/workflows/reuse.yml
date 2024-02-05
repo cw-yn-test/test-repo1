@@ -48,8 +48,8 @@ jobs:
 
       - name: Make changes to file_b
         run: |
-          touch test-repo2/work/file_repo_2
-          echo "New content" >> test-repo2/work/file_repo_2
+          touch test-repo2/work/file_repo_2.txt
+          echo "New content" >> test-repo2/work/file_repo_2.txt
 
       - name: Commit and Push changes to Repository B
         env:
