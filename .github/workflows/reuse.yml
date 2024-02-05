@@ -57,6 +57,13 @@ jobs:
           cd test-repo2
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
+          current_datetime=$(date +'%Y%m%d%H%M%S')
+          branch_name="ami-checker-${current_datetime}"
+          git checkout -b "$branch_name"
           git add work/sample.txt
           git commit -m "Update sample"
-          git push
+          git push --set-upstream origin "$branch_name"
+          gh pr create \
+          --base develop \
+          --title 'test PR' \
+          --body ""
