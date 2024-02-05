@@ -7,10 +7,10 @@ on:
         required: true
         type: string
 
-permissions:
-  id-token: write
-  contents: write # writeにしなければgit pushでエラーが発生する
-  pull-requests: write # writeにしなければPR作成でエラーが発生する
+# permissions:
+#   id-token: write
+#   contents: write # writeにしなければgit pushでエラーが発生する
+#   pull-requests: write # writeにしなければPR作成でエラーが発生する
 
 jobs:
   greeting:
