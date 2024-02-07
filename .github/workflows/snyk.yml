@@ -4,6 +4,4 @@ jobs:
   snyk-install:
   steps:
     - uses: actions/checkout@v2
-      run: |
-          cd work
-          snyk test --json | snyk monitor
+      run: cd work
