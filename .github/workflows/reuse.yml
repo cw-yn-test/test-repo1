@@ -78,10 +78,10 @@ jobs:
         id: test_yq
         uses: mikefarah/yq@master
         with:
-          cmd: yq -ry '.image|=ami-abcde' > ./work/test.yaml > ./work/test2.yaml
+          cmd: yq eval '.image=ami-abcde' -i ./work/test.yaml
 
       - name: cat yaml
         working-directory: ./work
         shell: bash
         run: |
-          cat ./work/test2.yaml
+          cat ./work/test.yaml
