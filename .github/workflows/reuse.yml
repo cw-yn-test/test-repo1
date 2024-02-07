@@ -52,24 +52,24 @@ jobs:
           # token: ${{ env.TOKEN }}
           path: 'test-repo2'
 
-      # - name: Make changes to file_b
-      #   run: |
-      #     echo "New content" >> test-repo2/work/sample.txt
+      - name: Make changes to file_b
+        run: |
+          echo "New content" >> test-repo2/work/sample.txt
 
-      # - name: Commit and Push changes to Repository B
-      #   env:
-      #     GH_TOKEN: ${{ env.TOKEN }}
-      #   run: |
-      #     cd test-repo2
-      #     git config user.name "${{ github.actor }}"
-      #     git config user.email "${{ github.actor }}@users.noreply.github.com"
-      #     current_datetime=$(date +'%Y%m%d%H%M%S')
-      #     branch_name="ami-checker-${current_datetime}"
-      #     git checkout -b "$branch_name"
-      #     git add work/sample.txt
-      #     git commit -m "Update sample"
-      #     git push --set-upstream origin "$branch_name"
-      #     gh pr create \
-      #     --base develop \
-      #     --title 'test PR' \
-      #     --body ""
+      - name: Commit and Push changes to Repository B
+        # env:
+        #   GH_TOKEN: ${{ env.TOKEN }}
+        run: |
+          cd test-repo2
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          current_datetime=$(date +'%Y%m%d%H%M%S')
+          branch_name="ami-checker-${current_datetime}"
+          git checkout -b "$branch_name"
+          git add work/sample.txt
+          git commit -m "Update sample"
+          git push --set-upstream origin "$branch_name"
+          gh pr create \
+          --base develop \
+          --title 'test PR' \
+          --body ""
