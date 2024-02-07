@@ -4,20 +4,13 @@ on:
   push:
 
 jobs:
-  snyk-import:
+  security:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@master
 
-      - name: Install Snyk CLI
-        run: npm install -g snyk
-
-      - name: Cd rep
-        run: cd work
-
-      - name: Snyk scan and import
-        run: snyk test --json | snyk monitor
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
