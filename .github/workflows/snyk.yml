@@ -13,3 +13,6 @@ jobs:
       - name: Install Snyk CLI
         run: npm install -g snyk
 
+      - name: Cd rep
+        run: cd work
+
