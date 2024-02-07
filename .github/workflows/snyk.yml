@@ -16,3 +16,6 @@ jobs:
       - name: Cd rep
         run: cd work
 
+      - name: Snyk scan and import
+        run: snyk test --json | snyk monitor
+
