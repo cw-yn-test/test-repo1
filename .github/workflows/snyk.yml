@@ -3,5 +3,6 @@ on: push
 jobs:
   snyk-install:
   steps:
-    uses: actions/checkout@v2
-    run: npm install -g snyk
+    - name: install snyk
+      uses: actions/checkout@v2
+      run: npm install -g snyk
