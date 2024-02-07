@@ -4,9 +4,12 @@ on:
   push:
 
 jobs:
-  say_hello:
+  snyk-import:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello World!"
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
+      - name: Install Snyk CLI
+        run: npm install -g snyk
 
