@@ -7,4 +7,3 @@ jobs:
       run: |
           cd work
           snyk test --json | snyk monitor
-      env: SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
