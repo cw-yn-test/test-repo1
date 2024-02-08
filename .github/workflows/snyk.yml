@@ -14,4 +14,4 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --all-projects
-          command: snyk monitor
+          command: monitor
