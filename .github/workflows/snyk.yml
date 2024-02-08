@@ -7,16 +7,11 @@ jobs:
   security:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Install Snyk CLI
-        run: npm install -g snyk
-
-      - name: Snyk scan and import for work
-        run: |
-          cd work
-          snyk test --dev --json | snyk monitor
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        
+        with:
+          args: --all-projects
+          command: snyk monitor
