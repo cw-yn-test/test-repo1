@@ -16,14 +16,7 @@ jobs:
       - name: cd src
         run: 
           cd services/src
-      
-      - name: install requirements.txt
-        run: 
           pip install -r requirements.txt
-
-      - name: cd test
-        run: 
-          cd ../..
       
       - name: Snyk scan and import for work
         run: 
