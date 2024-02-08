@@ -13,11 +13,20 @@ jobs:
       - name: Install Snyk CLI
         run: npm install -g snyk
 
-      - name: Snyk scan and import for work
-        run: |
+      - name: cd src
+        run: 
           cd services/src
+      
+      - name: install requirements.txt
+        run: 
           pip install -r requirements.txt
-          cd cd ../..
+
+      - name: cd test
+        run: 
+          cd ../..
+      
+      - name: Snyk scan and import for work
+        run: 
           snyk monitor --all-projects --dev
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
