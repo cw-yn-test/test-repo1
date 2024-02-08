@@ -74,11 +74,17 @@ jobs:
       #     --title 'test PR' \
       #     --body ""
 
-      - name: test yq
-        id: test_yq
-        uses: mikefarah/yq@master
-        with:
-          cmd: yq eval '.image = "ami-abcde"' -i ./work/test.yaml
+      # - name: test yq
+      #   id: test_yq
+      #   uses: mikefarah/yq@master
+      #   with:
+      #     cmd: yq eval '.image = "ami-abcde"' -i ./work/test.yaml
+
+      - name: Make Changes
+        shell: bash
+        working-directory: ./work
+        run: |
+          sed -i 's/^image: .*/image: ami-sample/' test.yaml
 
       - name: cat yaml
         working-directory: ./work
