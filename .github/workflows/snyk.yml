@@ -1,23 +1,23 @@
 name: Example workflow for Node using Snyk
 
 on: 
-  push:
+  workflow_dispatch:
 
 jobs:
   security:
     runs-on: ubuntu-latest
     steps:
-      - name: cd services
+      - name: Checkout repository
         uses: actions/checkout@v2
-        run : 
+
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Snyk scan and import for work
+        run: |
           cd services/src
           pip install -r requirements.txt
-
-      - uses: actions/checkout@master
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
+          cd cd ../..
+          snyk monitor --all-projects --dev
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --all-projects --dev
-          command: monitor
