@@ -1,5 +1,5 @@
 {
-  "name": "test-ops1",
+  "name": "test-ops",
   "version": "1.0.0",
   "devDependencies": {
     "@types/node": "18.14.2",
