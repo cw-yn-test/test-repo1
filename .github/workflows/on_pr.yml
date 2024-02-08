@@ -7,6 +7,7 @@ on:
       - 'release/**'
       - stage
       - main
+      - test/github-actions
     paths:
       - '.github/**'
       - 'work/**'
@@ -14,7 +15,7 @@ on:
 jobs:
   develop:
     name: Develop Action
-    if: ${{ github.base_ref == 'develop' }}
+    if: ${{ github.base_ref == 'develop' || github.base_ref == 'test/github-actions' }}
     uses: ./.github/workflows/reuse.yml
     secrets: inherit
     with:

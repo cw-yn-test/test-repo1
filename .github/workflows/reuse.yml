@@ -7,8 +7,10 @@ on:
         required: true
         type: string
 
-env:
-  MESSAGE: abcdefg
+# permissions:
+#   id-token: write
+#   contents: write # writeにしなければgit pushでエラーが発生する
+#   pull-requests: write # writeにしなければPR作成でエラーが発生する
 
 jobs:
   greeting:
@@ -20,24 +22,72 @@ jobs:
       environmentName: ${{ vars.ENVIRONMENT_NAME }}
       AWS_REGION: ap-northeast-1
       BASE_BRANCH: develop
+      TOKEN: ${{ secrets.MY_GITHUB_ACCESS_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          ref: ${{ env.BASE_BRANCH }}
+        # with:
+        #   ref: ${{ env.BASE_BRANCH }}
 
-      - name: AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-region: ${{ env.AWS_REGION }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # - name: AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v2
+      #   with:
+      #     aws-region: ${{ env.AWS_REGION }}
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Check Difference in AMI Name
-        uses: ./.github/actions/check_diff_in_ami
+      # - name: Check Difference in AMI Name
+      #   uses: ./.github/actions/check_diff_in_ami
 
-      - name: Create PR
-        if: ${{ env.IS_DIFF_IN_AMI_NAME == 'true' }}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: ./.github/actions/create_pr
+      # - name: Create PR
+      #   if: ${{ env.IS_DIFF_IN_AMI_NAME == 'true' }}
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   uses: ./.github/actions/create_pr
+
+      # - name: Checkout Repository TEST-REPO2
+      #   uses: actions/checkout@v3
+      #   with:
+      #     repository: 'cw-yn-test2/test-repo2'
+      #     token: ${{ env.TOKEN }}
+      #     path: 'test-repo2'
+
+      # - name: Make changes to file_b
+      #   run: |
+      #     echo "New content" >> test-repo2/work/sample.txt
+
+      # - name: Commit and Push changes to Repository B
+      #   env:
+      #     GH_TOKEN: ${{ env.TOKEN }}
+      #   run: |
+      #     cd test-repo2
+      #     git config user.name "${{ github.actor }}"
+      #     git config user.email "${{ github.actor }}@users.noreply.github.com"
+      #     current_datetime=$(date +'%Y%m%d%H%M%S')
+      #     branch_name="ami-checker-${current_datetime}"
+      #     git checkout -b "$branch_name"
+      #     git add work/sample.txt
+      #     git commit -m "Update sample"
+      #     git push --set-upstream origin "$branch_name"
+      #     gh pr create \
+      #     --base develop \
+      #     --title 'test PR' \
+      #     --body ""
+
+      # - name: test yq
+      #   id: test_yq
+      #   uses: mikefarah/yq@master
+      #   with:
+      #     cmd: yq eval '.image = "ami-abcde"' -i ./work/test.yaml
+
+      - name: Make Changes
+        shell: bash
+        working-directory: ./work
+        run: |
+          sed -i 's/^image: .*/image: ami-sample/' test.yaml
+
+      - name: cat yaml
+        working-directory: ./work
+        shell: bash
+        run: |
+          cat test.yaml
