@@ -15,4 +15,4 @@ jobs:
       - name: repository all file list
         run: git ls-tree -r HEAD
       - name: repository diff file list
-        run: echo "::set-output name=changed::$(git diff --name-only origin/develop HEAD | wc -l)"
+        run: echo "$(git diff --name-only origin/develop..HEAD)"
