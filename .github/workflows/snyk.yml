@@ -13,6 +13,11 @@ jobs:
           command: monitor
       - name: repository all file list
         run: echo "$(git ls-tree -r HEAD | grep package.json)"
+      - name: repository package.json folda list
+        run: echo "$(git ls-tree -r HEAD | grep package.json | awk '{print $4}' | sed -e 's/package.json//' -e 's/\///')"
       - run: git fetch origin develop --depth=1
       - name: repository diff file list
         run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json)"
+      - name: repository diff package.json folda list
+        run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | awk '{print $4}' | sed -e 's/package.json//' -e 's/\///')"
+        
