@@ -18,6 +18,11 @@ jobs:
           cd services/src
           pip install -r requirements.txt
       
+      - name: cd work
+        run: |
+          cd work
+          npm install
+  
       - name: Snyk scan and import for work
         run: 
           snyk monitor --file=work/package.json
