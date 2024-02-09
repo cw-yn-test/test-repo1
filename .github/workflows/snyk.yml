@@ -20,6 +20,6 @@ jobs:
   
       - name: Snyk scan and import for work
         run: |
-          snyk monitor --dev --file=package.json
+          snyk monitor --dev --file=work/package.json
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
