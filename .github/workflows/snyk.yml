@@ -12,7 +12,7 @@ jobs:
         with:
           command: monitor
       - name: repository all file list
-        run: git ls-tree -r HEAD
+        run: echo "$(git ls-tree -r HEAD | grep package.json)"
       - run: git fetch origin develop --depth=1
       - name: repository diff file list
-        run: echo "$(git diff --name-only origin/develop..HEAD)"
+        run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json)"
