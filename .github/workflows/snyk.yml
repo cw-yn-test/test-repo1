@@ -17,14 +17,11 @@ jobs:
         run: |
           cd services/src
           pip install -r requirements.txt
-      
-      - name: cd work
+  
+      - name: Snyk scan and import for work
         run: |
           cd work
           npm install
-  
-      - name: Snyk scan and import for work
-        run: 
           snyk monitor --file=work/package.json
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
