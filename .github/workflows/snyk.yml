@@ -22,6 +22,6 @@ jobs:
         run: |
           cd work
           npm install
-          snyk monitor --file=work/package.json
+          snyk monitor --file=package.json
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
