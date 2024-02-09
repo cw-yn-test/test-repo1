@@ -11,8 +11,7 @@ jobs:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
         with:
           command: monitor
-          fetch-depth: 0
       - name: repository all file list
         run: git ls-tree -r origin/feature/mukai-test
       - name: repository diff file list
-        run: git diff --name-only origin/develop..origin/feature/mukai-test
+        run: echo "::set-output name=changed::$(git diff --name-only origin/develop..origin/feature/mukai-test | wc -l)"
