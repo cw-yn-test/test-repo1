@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+      - run: git fetch origin ${{ github.base_ref }} --depth=1
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         env:
@@ -12,6 +13,6 @@ jobs:
         with:
           command: monitor
       - name: repository all file list
-        run: git ls-tree -r origin/feature/mukai-test
+        run: git ls-tree -r HEAD
       - name: repository diff file list
-        run: echo "::set-output name=changed::$(git diff --name-only origin/develop..origin/feature/mukai-test | wc -l)"
+        run: echo "::set-output name=changed::$(git diff --name-only origin/${{ github.base_ref }} HEAD | wc -l)"
