@@ -13,7 +13,7 @@ jobs:
         with:
           command: monitor
       - name: package file list
-        run: echo PACKAGE_FILE_LIST = "$(git ls-tree --name-only -r HEAD | grep package.json)" >> $GITHUB_ENV
+        run: echo PACKAGE_FILE_LIST = "echo $(git ls-tree --name-only -r HEAD | grep package.json)" >> $GITHUB_ENV
       - name: package folder
         run: echo "$(${PACKAGE_FILE_LIST} | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"
       - name: diff package file list
