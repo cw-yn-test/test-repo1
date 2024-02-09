@@ -12,20 +12,12 @@ jobs:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
         with:
           command: monitor
-      # - name: package file list
-      #   run: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/^/\//g')"
-      # - name: package folder
-      #   run: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"
-      # - name: diff package file list
-      #   run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/^/\//g')"
-      # - name: diff package folder
-      #   run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"
-     - name: package file list
-       run: |
-           hoge='echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/^/\//g')"'
-           echo "::set-output name=FOO::${hoge}"
-       id: step-foo
-     - name: Get Foo
-       # 結果: The FOO is bar
-       run: echo 'The FOO is' ${{ steps.step-foo.outputs.FOO }}
+      - name: package file list
+        run: echo PACKAGE_FILE_LIST = "$(git ls-tree --name-only -r HEAD | grep package.json)" >> $GITHUB_ENV
+      - name: package folder
+        run: echo "$(${PACKAGE_FILE_LIST} | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"
+      - name: diff package file list
+        run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/^/\//g')"
+      - name: diff package folder
+        run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"
         
