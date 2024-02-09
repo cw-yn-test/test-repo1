@@ -12,6 +12,6 @@ jobs:
         with:
           command: monitor
       - name: repository all file list
-        run: `git ls-tree -r origin/feature/mukai-test`
+        run: git ls-tree -r origin/feature/mukai-test
       - name: repository diff file list
-        run: `git diff --name-only origin/develop..origin/feature/mukai-test`
+        run: git diff --name-only origin/develop..origin/feature/mukai-test
