@@ -5,19 +5,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+      - run: git fetch origin develop --depth=1
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
         with:
           command: monitor
-      - name: all file list
-        run: echo "$(git ls-tree -r HEAD | grep package.json)"
+      - name: package file list
+        run: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/^/\//g')"
       - name: package folder
-        run: echo "$(git ls-tree -r HEAD | grep package.json | awk '{print $4}' | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"
-      - run: git fetch origin develop --depth=1
+        run: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"
       - name: repository diff file list
-        run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json)"
+        run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/^/\//g')"
       - name: diff package folder
-        run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | awk '{print $4}' | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"
+        run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"
         
