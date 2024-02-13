@@ -39,7 +39,7 @@ jobs:
         value: ${{ fromJson(needs.security.outputs.output1) }}
     steps:
       - uses: actions/checkout@master
-      - run: cd ${{ matrix.value }}
+      - run: cd ${{ matrix.value }} && npm install
   # sample:
   #   runs-on: ubuntu-latest
     
