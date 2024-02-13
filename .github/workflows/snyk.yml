@@ -3,13 +3,6 @@ on: push
 jobs:
   security:
     runs-on: ubuntu-latest
-    strategy:
-      - run: |
-          echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//')"" >> $GITHUB_ENV
-      - name: package folder env
-        run: echo "$PACKAGE_FOLDER | sed -e 's/ /, /'"
-        matrix:
-          value: ${{ fromJson($PACKAGE_FOLDER) }}
     steps:
       - uses: actions/checkout@master
       - run: git fetch origin develop --depth=1
@@ -27,6 +20,14 @@ jobs:
         run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/^/\//g')"
       - name: diff package folder
         run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"  
+      - run: |
+          echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//')"" >> $GITHUB_ENV
+      - name: package folder env
+        run: echo "$PACKAGE_FOLDER | sed -e 's/ /, /'"
+    strategy:
+        matrix:
+          value: ${{ fromJson($PACKAGE_FOLDER) }}
+    steps:
       - name: sample
         run: |
           echo "${{ matrix.value }}"  
