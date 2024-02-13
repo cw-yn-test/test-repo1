@@ -27,7 +27,7 @@ jobs:
       - name: package folder env
         run: echo $PACKAGE_FOLDER
       - id: step1
-        run: echo "test=$(echo $PACKAGE_FOLDER | tr ' ' '\"", \"')" >> $GITHUB_OUTPUT
+        run: echo "test=$(echo $PACKAGE_FOLDER)" >> $GITHUB_OUTPUT
   # job2:
   #   runs-on: ubuntu-latest
   #   needs: security
