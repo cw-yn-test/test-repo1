@@ -38,7 +38,7 @@ jobs:
         # value: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')]" | tr '\n' ', ' | sed -e 's/],/]/'
         value: ${{ fromJson(needs.security.outputs.output1) }}
     steps:
-      - run: cd ./tmp/tmp_1
+      - run: cd /home/runner/work/test-repo1/test-repo1/tmp/tmp_1
   # sample:
   #   runs-on: ubuntu-latest
     
