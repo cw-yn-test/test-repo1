@@ -41,6 +41,7 @@ jobs:
       - name: sample
         run: |
           pwd
+          ls
           cd ${{ matrix.value }}
   # sample:
   #   runs-on: ubuntu-latest
