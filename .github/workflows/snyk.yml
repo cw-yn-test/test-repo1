@@ -20,10 +20,8 @@ jobs:
         run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/^/\//g')"
       - name: diff package folder
         run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"  
-      # - run: |
-      #     echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')"" >> $GITHUB_ENV
       - run: |
-          echo "PACKAGE_FOLDER="aa,bb" >> $GITHUB_ENV
+          echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')"" >> $GITHUB_ENV
       - name: package folder env
         run: echo $PACKAGE_FOLDER
   sample:
