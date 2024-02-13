@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
         matrix:
-          value: ${{ fromJson(${{$PACKAGE_FOLDER}}) }}
+          value: ${{ fromJson($PACKAGE_FOLDER) }}
     steps:
       - name: sample
         run: |
