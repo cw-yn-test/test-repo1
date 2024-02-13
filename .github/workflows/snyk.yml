@@ -27,7 +27,7 @@ jobs:
   sample:
     strategy:
         matrix:
-          value: ${{ fromJson($PACKAGE_FOLDER) }}
+          value: [hoge, fuga]
     steps:
       - name: sample
         run: |
