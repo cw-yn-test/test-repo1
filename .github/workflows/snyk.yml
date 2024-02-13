@@ -8,6 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: git fetch origin develop --depth=1
+      - run: pip install jc
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         env:
