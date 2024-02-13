@@ -31,7 +31,7 @@ jobs:
     strategy:
         matrix:
           # value: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')]" | tr '\n' ', ' | sed -e 's/],/]/'
-          value: [$PACKAGE_FOLDER]
+          value: [{{ $PACKAGE_FOLDER }}]
     steps:
       - name: sample
         run: |
