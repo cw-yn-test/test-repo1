@@ -28,7 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
         matrix:
-          value: ${{ echo "[$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')]" | tr '\n' ', ' | sed -e 's/],/]/' }}
+          # value: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')]" | tr '\n' ', ' | sed -e 's/],/]/'
+          value: [$(echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')#" | tr '\n' ', ' | sed -e 's/#,//')]
     steps:
       - name: sample
         run: |
