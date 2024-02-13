@@ -3,6 +3,8 @@ on: push
 jobs:
   security:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.value }}
     steps:
       - uses: actions/checkout@master
       - run: git fetch origin develop --depth=1
@@ -24,24 +26,27 @@ jobs:
           echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')"" >> $GITHUB_ENV
       - name: package folder env
         run: echo $PACKAGE_FOLDER
-  get_pr_matrix:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.matrix.outputs.value }}
-    steps:
-      - uses: actions/checkout@master
       - id: matrix
         run: |
           pr_list=$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')#"
           echo "::set-output name=value::$(echo $pr_list | | tr '\n' ', ' | sed -e 's/#,//')"
+  # get_pr_matrix:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     matrix: ${{ steps.matrix.outputs.value }}
+  #   steps:
+  #     - uses: actions/checkout@master
+  #     - id: matrix
+  #       run: |
+  #         pr_list=$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')#"
+  #         echo "::set-output name=value::$(echo $pr_list | | tr '\n' ', ' | sed -e 's/#,//')"
   do_process:
-    needs: get_pr_matrix
+    needs: security
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        value: ${{ fromJson(needs.get_pr_matrix.outputs.matrix) }}
+        value: ${{ fromJson(needs.security.outputs.matrix) }}
     steps:
       - name: Processing for each pull request
-      - uses: actions/checkout@master
       - run: |
           echo ${{ matrix.value }}
