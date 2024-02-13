@@ -31,8 +31,12 @@ jobs:
   job2:
     runs-on: ubuntu-latest
     needs: security
+    strategy:
+      matrix:
+        # value: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')]" | tr '\n' ', ' | sed -e 's/],/]/'
+        value: [{{ needs.security.outputs.output1 }}]
     steps:
-      - run: echo ${{needs.security.outputs.output1}}
+      - run: echo ${{ matrix.value }}
   # sample:
   #   runs-on: ubuntu-latest
     
