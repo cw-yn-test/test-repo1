@@ -39,7 +39,7 @@ jobs:
         value: ${{ fromJson(needs.security.outputs.output1) }}
     steps:
       - uses: actions/checkout@master
-      - run: cd /home/runner/work/test-repo1/test-repo1/tmp/tmp_1
+      - run: cd ${{ matrix.value }}
   # sample:
   #   runs-on: ubuntu-latest
     
