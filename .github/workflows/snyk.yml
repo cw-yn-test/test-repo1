@@ -1,60 +1,54 @@
 name: Example workflow for Node using Snyk
 on: push
-jobs:
-  security:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - run: git fetch origin develop --depth=1
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
-        with:
-          command: monitor
-      - name: package file list
-        run: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/^/\//g')" 
-      - name: package folder
-        run: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"
-      - name: diff package file list
-        run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/^/\//g')"
-      - name: diff package folder
-        run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"  
-      - run: |
-          echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')"" >> $GITHUB_ENV
-      - name: package folder env
-        run: echo $PACKAGE_FOLDER
-  sample:
-    runs-on: ubuntu-latest
-    strategy:
-      - run: |
-         echo "PACKAGE_FOLDER=aa,bb"
-      matrix:
-        # value: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')]" | tr '\n' ', ' | sed -e 's/],/]/'
-        value: [{{ $PACKAGE_FOLDER }}]
-    steps:
-      - name: sample
-        run: |
-          echo "${{ matrix.value }}"  
-
-  # get_pr_matrix:
+# jobs:
+  # security:
   #   runs-on: ubuntu-latest
-  #   outputs:
-  #     matrix: ${{ steps.matrix.outputs.value }}
   #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - id: matrix
-  #       run: |
-  #         pr_list=$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')#"
-  #         echo "::set-output name=value::$(echo $pr_list | | tr '\n' ', ' | sed -e 's/#,//')"
-  # do_process:
-  #   needs: get_pr_matrix
+  #     - uses: actions/checkout@master
+  #     - run: git fetch origin develop --depth=1
+  #     - name: Run Snyk to check for vulnerabilities
+  #       uses: snyk/actions/node@master
+  #       env:
+  #         SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
+  #       with:
+  #         command: monitor
+  #     - name: package file list
+  #       run: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/^/\//g')" 
+  #     - name: package folder
+  #       run: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"
+  #     - name: diff package file list
+  #       run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/^/\//g')"
+  #     - name: diff package folder
+  #       run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"  
+  #     - run: |
+  #         echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')"" >> $GITHUB_ENV
+  #     - name: package folder env
+  #       run: echo $PACKAGE_FOLDER
+  # sample:
   #   runs-on: ubuntu-latest
+    
   #   strategy:
   #     matrix:
-  #       value: ${{ fromJson(needs.get_pr_matrix.outputs.matrix) }}
+  #       # value: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')]" | tr '\n' ', ' | sed -e 's/],/]/'
+  #       value: [{{ $PACKAGE_FOLDER }}]
   #   steps:
-  #     - name: Processing for each pull request
-  #     - run: |
-  #         echo ${{ matrix.value }}
+  #     - name: sample
+  #       run: |
+  #         echo "${{ matrix.value }}"  
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    # ステップの出力をジョブの出力にマップする
+    outputs:
+      output1: ${{ steps.step1.outputs.test }}
+      output2: ${{ steps.step2.outputs.test }}
+    steps:
+      - id: step1
+        run: echo "::set-output name=test::hello"
+      - id: step2
+        run: echo "::set-output name=test::world"
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1
+    steps:
+      - run: echo ${{needs.job1.outputs.output1}} ${{needs.job1.outputs.output2}}
