@@ -24,17 +24,17 @@ jobs:
           echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')"" >> $GITHUB_ENV
       - name: package folder env
         run: echo $PACKAGE_FOLDER
-  get_pr_matrix:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.matrix.outputs.value }}
-    steps:
-      - uses: actions/checkout@master
-      - run: git fetch origin develop --depth=1
-      - id: matrix
-        run: |
-          pr_list=$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')#"
-          echo "::set-output name=value::$(echo $pr_list | | tr '\n' ', ' | sed -e 's/#,//')"
+  # get_pr_matrix:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     matrix: ${{ steps.matrix.outputs.value }}
+  #   steps:
+  #     - uses: actions/checkout@master
+  #     - run: git fetch origin develop --depth=1
+  #     - id: matrix
+  #       run: |
+  #         pr_list=$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')#"
+  #         echo "::set-output name=value::$(echo $pr_list | | tr '\n' ', ' | sed -e 's/#,//')"
   do_process:
     needs: get_pr_matrix
     runs-on: ubuntu-latest
