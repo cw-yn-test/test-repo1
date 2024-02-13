@@ -39,7 +39,7 @@ jobs:
     steps:
       - name: sample
         run: |
-          echo ${{ matrix.value }}
+          cd ${{ matrix.value }} && npm install
   # sample:
   #   runs-on: ubuntu-latest
     
