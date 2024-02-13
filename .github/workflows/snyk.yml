@@ -10,7 +10,6 @@ jobs:
         run: echo "$PACKAGE_FOLDER | sed -e 's/ /, /'"
         matrix:
           value: ${{ fromJson($PACKAGE_FOLDER) }}
-
     steps:
       - uses: actions/checkout@master
       - run: git fetch origin develop --depth=1
