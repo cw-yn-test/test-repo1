@@ -39,7 +39,8 @@ jobs:
     steps:
       - name: sample
         run: |
-          cd ${{ matrix.value }} && npm install
+          cd ${{ matrix.value }}
+          npm install
   # sample:
   #   runs-on: ubuntu-latest
     
