@@ -24,15 +24,24 @@ jobs:
           echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')"" >> $GITHUB_ENV
       - name: package folder env
         run: echo $PACKAGE_FOLDER
-  sample:
+  get_pr_matrix:
     runs-on: ubuntu-latest
-    # strategy:
-    #     matrix:
-    #       # value: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')]" | tr '\n' ', ' | sed -e 's/],/]/'
-    #       value: [{{ $PACKAGE_FOLDER }}]
+    outputs:
+      matrix: ${{ steps.matrix.outputs.value }}
     steps:
-      # - name: sample
-      #   run: |
-      #     echo "${{ matrix.value }}"  
-      - name: package folder env
-        run: echo $PACKAGE_FOLDER
+      # - name: Checkout
+      #   uses: actions/checkout@master
+      - id: matrix
+        run: |
+          pr_list=$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/~\//g')#"
+          echo "::set-output name=value::$(echo $pr_list | | tr '\n' ', ' | sed -e 's/#,//')"
+  do_process:
+    needs: get_pr_matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        value: ${{ fromJson(needs.get_pr_matrix.outputs.matrix) }}
+    steps:
+      - name: Processing for each pull request
+      - run: |
+          echo ${{ matrix.value }}
