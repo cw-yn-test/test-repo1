@@ -29,10 +29,7 @@ jobs:
       matrix:
         value: ${{ fromJson(needs.security.outputs.output1) }}
     steps:
-      - name: Checkout repository
       - uses: actions/checkout@v2
-
-      - name: Snyk scan and import for ${{ matrix.value }}
       - run: |
           cd ${{ matrix.value }} 
           npm install
