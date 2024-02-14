@@ -17,11 +17,18 @@
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,jsx}": ["eslint"],
-    "*.{css,scss}": ["stylelint"]
+    "*.{js,jsx}": [
+      "eslint"
+    ],
+    "*.{css,scss}": [
+      "stylelint"
+    ]
   },
   "simple-git-hooks": {
     "pre-commit": "npm run lint-staged"
   },
-  "stability": "experimental"
+  "stability": "experimental",
+  "dependencies": {
+    "moment": "^2.30.1"
+  }
 }
