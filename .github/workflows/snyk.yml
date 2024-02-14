@@ -9,8 +9,6 @@ jobs:
       - uses: actions/checkout@master
       - run: git fetch origin develop --depth=1
       - run: pip install jc
-      - name: Run Snyk to check for vulnerabilities
-      - run: npm install -g snyk
 
       - name: package file list
         run: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/^/\//g')" 
@@ -32,5 +30,9 @@ jobs:
         value: ${{ fromJson(needs.security.outputs.output1) }}
     steps:
       - uses: actions/checkout@master
-      - run: cd ${{ matrix.value }} && npm install 
-      
+      - run: cd ${{ matrix.value }} && npm install
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --dev --all-projects
+          command: monitor
