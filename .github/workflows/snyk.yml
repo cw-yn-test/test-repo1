@@ -13,7 +13,7 @@ jobs:
       - name: package file list
         run: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/^/\//g')" 
       - name: package folder
-        run: echo "$(git ls-tree --name-only -r HEAD | grep package.json' services/* | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"
+        run: echo "$(git ls-tree --name-only -r HEAD | grep package.json' services)"
       - name: diff package file list
         run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/^/\//g')"
       - name: diff package folder
