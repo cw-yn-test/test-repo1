@@ -31,9 +31,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-        cd ${{ matrix.value }} 
-        npm install
-        snyk monitor --dev --file=package.json
+          cd ${{ matrix.value }} 
+          npm install
+          snyk monitor --dev --file=package.json
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
