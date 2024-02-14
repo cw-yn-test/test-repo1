@@ -19,6 +19,7 @@ jobs:
       - name: diff package folder
         run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"  
       - run: |
+          cd services
           echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/.\//g' | jc --kv | jq keys | jq -c)"" >> $GITHUB_ENV
       - id: step1
         run: echo "test=$PACKAGE_FOLDER" >> $GITHUB_OUTPUT
@@ -37,4 +38,5 @@ jobs:
           snyk monitor --dev --file=package.json
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
 
