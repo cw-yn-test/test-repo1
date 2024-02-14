@@ -6,7 +6,7 @@ jobs:
     outputs:
       output1: ${{ steps.step1.outputs.test }}
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - run: git fetch origin develop --depth=1
       - run: pip install jc
 
@@ -29,10 +29,6 @@ jobs:
       matrix:
         value: ${{ fromJson(needs.security.outputs.output1) }}
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - run: cd ${{ matrix.value }} && npm install
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --dev --all-projects
-          command: monitor
+
