@@ -33,6 +33,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: |
-        cd ${{ matrix.value }} && npm install
+        cd ${{ matrix.value }}
+        npm install
         snyk monitor --dev --file=package.json
       
