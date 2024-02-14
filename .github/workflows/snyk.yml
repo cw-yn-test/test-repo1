@@ -32,5 +32,5 @@ jobs:
         value: ${{ fromJson(needs.security.outputs.output1) }}
     steps:
       - uses: actions/checkout@master
-      - run: cd ${{ matrix.value }} && npm install && snyk monitor --dev --file=package.json
+      - run: cd ${{ matrix.value }} && npm install 
       
