@@ -7,13 +7,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # - name: Install Snyk CLI
-      #   run: npm install -g snyk
+      - name: Install Snyk CLI
+        run: npm install -g snyk
 
-      # - name: Snyk scan and import for work
-      #   run: snyk monitor --dev --all-projects
-      #   env:
-      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Snyk scan and import for work
+        run: snyk monitor --all-projects
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       # - name: Run Snyk to check for vulnerabilities
       #   uses: snyk/actions/node@master
@@ -22,12 +22,4 @@ jobs:
       #   with:
       #     command: monitor
       #     args: --all-projects
-
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: monitor
-          args: --all-projects
 
