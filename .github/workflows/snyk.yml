@@ -31,7 +31,7 @@ jobs:
       - run: |
           for folder in $PACKAGE_FOLDER
           do
-            cd ${PWD}
+            cd ${{PWD}}
             ls
             cd $folder && npm install
           done
