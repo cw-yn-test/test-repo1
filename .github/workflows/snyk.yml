@@ -12,13 +12,13 @@ jobs:
 
       - name: Snyk scan and import for work
         working-directory: ./work
-        run: snyk monitor --all-projects --skip-unresolved
+        run: snyk monitor --all-projects --skip-unresolved --project-name=work
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Snyk scan and import for work
         working-directory: ./work2
-        run: snyk monitor --all-projects --skip-unresolved
+        run: snyk monitor --all-projects --skip-unresolved --project-name=work2
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
