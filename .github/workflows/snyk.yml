@@ -18,7 +18,7 @@ jobs:
 
       - name: Snyk scan and import for work
         working-directory: ./work2
-        run: snyk monitor --all-projects --print-dep-paths --skip-unresolved
+        run: snyk monitor --all-projects --skip-unresolved
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
