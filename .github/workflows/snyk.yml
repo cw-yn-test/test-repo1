@@ -25,7 +25,7 @@ jobs:
         run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"  
       - run: |
           echo "PWD=$(pwd)" >> $GITHUB_ENV
-          echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/.\//g')"" >> $GITHUB_ENV
+          echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//')"sed -e 's/^/$PWD\//g'" >> $GITHUB_ENV
           
       - id: step1
         run: echo "test1=$PACKAGE_FOLDER" >> $GITHUB_OUTPUT
@@ -34,12 +34,9 @@ jobs:
         run: |
           for folder in $PACKAGE_FOLDER
           do
-            cd $PWD
             ls
             cd $folder && npm install
           done
-        env:
-          PWD2: ${PWD}
       - name: Snyk scan and import for work
         run: |
           npm install -g snyk
