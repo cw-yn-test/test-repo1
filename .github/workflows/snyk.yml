@@ -12,7 +12,7 @@ jobs:
 
       - name: Snyk scan and import for work
         working-directory: ./packages/src
-        run: snyk monitor -skip-unresolved --project-name=work
+        run: snyk monitor -skip-unresolved --project-name-prefix=./packages/src
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
