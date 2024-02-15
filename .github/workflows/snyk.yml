@@ -36,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: cd ${{ matrix.value }} && npm install
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
       - name: cache node modules
         id: cache-node-modules
         uses: actions/cache@v4
@@ -50,7 +50,7 @@ jobs:
     needs: job2
     steps:
       - uses: actions/checkout@master
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
       - name: cache node modules
         id: cache-node-modules
         uses: actions/cache@v4
