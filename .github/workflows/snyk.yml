@@ -34,12 +34,12 @@ jobs:
         run: |
           for folder in $PACKAGE_FOLDER
           do
-            cd $PWD2
+            cd $PWD
             ls
             cd $folder && npm install
           done
         env:
-          PWD2: $PWD
+          PWD2: ${PWD}
       - name: Snyk scan and import for work
         run: |
           npm install -g snyk
