@@ -53,6 +53,8 @@ jobs:
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
+        with:
+          command: monitor
       - name: Snyk scan and import for work
         run: |
           npm install -g snyk
