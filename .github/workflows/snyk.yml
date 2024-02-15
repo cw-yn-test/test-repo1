@@ -6,11 +6,11 @@ jobs:
     outputs:
       output1: ${{ steps.step1.outputs.test1 }}
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v3
       - run: git fetch origin develop --depth=1
       - run: pip install jc
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
+        uses: snyk/actions/node@v3
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
         with:
@@ -30,7 +30,6 @@ jobs:
       - name: snyk cache
         uses: actions/cache/save@v3
         with:
-          node-version: 20
           # OS間共有の有効化
           enableCrossOsArchive: true
           # キャッシュ対象のパス
@@ -44,7 +43,7 @@ jobs:
       matrix:
         value: ${{ fromJson(needs.security.outputs.output1) }}
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v3
       - run: cd ${{ matrix.value }} && npm install
       - name: snyk restore
         uses: actions/cache/restore@v3
@@ -69,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: job2
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v3
       - name: build restore
         uses: actions/cache/restore@v3
         with:
