@@ -28,7 +28,7 @@ jobs:
       - id: step1
         run: echo "test1=$PACKAGE_FOLDER" >> $GITHUB_OUTPUT
       - name: snyk cache
-        uses: actions/cache/save@v2
+        uses: actions/cache/save@v3
         with:
           node-version: 20
           # OS間共有の有効化
@@ -81,7 +81,7 @@ jobs:
           # キャッシュキー（キャッシュファイル名）
           key: prod-node18-${{ github.sha }}
       - name: snyk restore
-        uses: actions/cache/restore@v2
+        uses: actions/cache/restore@v3
         with:
           node-version: 20
           # OS間共有の有効化
