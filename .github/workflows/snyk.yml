@@ -31,7 +31,7 @@ jobs:
       - run: |
           for folder in $PACKAGE_FOLDER
           do
-            cd /home/runner/work/test-repo1/test-repo1
+            cd {{$PWD}}
             ls
             cd $folder && npm install
           done
@@ -39,6 +39,8 @@ jobs:
         run: |
           npm install -g snyk
           snyk monitor --dev --all-projects
+        env:
+          SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
   # job2:
   #   runs-on: ubuntu-latest
   #   needs: security
