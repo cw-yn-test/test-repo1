@@ -10,7 +10,7 @@ jobs:
       - run: git fetch origin develop --depth=1
       - run: pip install jc
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@v3
+        uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
         with:
