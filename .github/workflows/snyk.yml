@@ -33,7 +33,7 @@ jobs:
           # OS間共有の有効化
           enableCrossOsArchive: true
           # キャッシュ対象のパス
-          path: "./snyk"
+          path: "packages/**/snyk"
           # キャッシュキー（キャッシュファイル名）
           key: prod-node18-${{ github.sha }}
   job2:
