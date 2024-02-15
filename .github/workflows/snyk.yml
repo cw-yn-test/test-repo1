@@ -28,9 +28,9 @@ jobs:
       - id: step1
         run: echo "test1=$PACKAGE_FOLDER" >> $GITHUB_OUTPUT
       - run: |
-          for folder in $PACKAGE_FOLDER
+          for i in 1 2 3 4 5
           do
-            cd $folder && npm install
+            cd $i && npm install
           done
       - name: Snyk scan and import for work
         run: |
