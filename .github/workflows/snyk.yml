@@ -34,8 +34,8 @@ jobs:
         run: |
           for folder in $PACKAGE_FOLDER
           do
-            cd $PWD
-            ls
+            cd ${PWD}
+            ls ${PWD}
             cd $folder && npm install
           done
       - name: Snyk scan and import for work
