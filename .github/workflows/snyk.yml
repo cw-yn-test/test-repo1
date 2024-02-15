@@ -29,10 +29,11 @@ jobs:
           
       - id: step1
         run: echo "test1=$PACKAGE_FOLDER" >> $GITHUB_OUTPUT
-      - run: |
+      - name: npm install
+        working-directory: $PWD
+        run: |
           for folder in $PACKAGE_FOLDER
           do
-            cd ~
             ls
             cd $folder && npm install
           done
