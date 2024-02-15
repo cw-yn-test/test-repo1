@@ -27,15 +27,24 @@ jobs:
           echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/.\//g' | jc --kv |  jq '. + {"#": ""}' | jq keys | jq '.[1:] + .[0:1]' | jq -c)"" >> $GITHUB_ENV
       - id: step1
         run: echo "test1=$PACKAGE_FOLDER" >> $GITHUB_OUTPUT
-  job2:
-    runs-on: ubuntu-latest
-    needs: security
-    strategy:
-      matrix:
-        value: ${{ fromJson(needs.security.outputs.output1) }}
-    steps:
-      - uses: actions/checkout@master
-      - run: cd ${{ matrix.value }} && npm install
+      - run: |
+          for folder in $PACKAGE_FOLDER
+          do
+            cd $folder && npm install
+          done
+      - name: Snyk scan and import for work
+        run: |
+          npm install -g snyk
+          snyk monitor --dev --all-projects
+  # job2:
+  #   runs-on: ubuntu-latest
+  #   needs: security
+  #   strategy:
+  #     matrix:
+  #       value: ${{ fromJson(needs.security.outputs.output1) }}
+  #   steps:
+  #     - uses: actions/checkout@master
+  #     - run: cd ${{ matrix.value }} && npm install
   # job3:
   #   runs-on: ubuntu-latest
   #   needs: job2
