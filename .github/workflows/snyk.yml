@@ -11,7 +11,7 @@ jobs:
         run: npm install -g snyk
 
       - name: Snyk scan and import for work
-        run: snyk monitor --all-projects --skip-unresolved
+        run: snyk monitor --all-projects --skip-unresolved --project-name="test-project"
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
