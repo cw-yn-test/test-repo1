@@ -45,6 +45,15 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: cd ${{ matrix.value }} && npm install
+      - name: snyk restore
+        uses: actions/cache/restore@v3
+        with:
+          # OS間共有の有効化
+          enableCrossOsArchive: true
+          # キャッシュ対象のパス
+          path: "packages/**/snyk"
+          # キャッシュキー（キャッシュファイル名）
+          key: prod-node18-${{ github.sha }}
       - name: build cache
         uses: actions/cache/save@v3
         with:
@@ -66,15 +75,6 @@ jobs:
           enableCrossOsArchive: true
           # キャッシュ対象のパス
           path: "packages/**/lib"
-          # キャッシュキー（キャッシュファイル名）
-          key: prod-node18-${{ github.sha }}
-      - name: snyk restore
-        uses: actions/cache/restore@v3
-        with:
-          # OS間共有の有効化
-          enableCrossOsArchive: true
-          # キャッシュ対象のパス
-          path: "packages/**/snyk"
           # キャッシュキー（キャッシュファイル名）
           key: prod-node18-${{ github.sha }}
       - name: Snyk scan and import for work
