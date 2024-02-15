@@ -11,6 +11,13 @@ jobs:
         run: npm install -g snyk
 
       - name: Snyk scan and import for work
+        working-directory: ./work
+        run: snyk monitor --all-projects --skip-unresolved
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Snyk scan and import for work
+        working-directory: ./work2
         run: snyk monitor --all-projects --print-dep-paths --skip-unresolved
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
