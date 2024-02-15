@@ -6,7 +6,7 @@ jobs:
     outputs:
       output1: ${{ steps.step1.outputs.test1 }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@master
       - run: git fetch origin develop --depth=1
       - run: pip install jc
       - name: Run Snyk to check for vulnerabilities
@@ -28,7 +28,7 @@ jobs:
       - id: step1
         run: echo "test1=$PACKAGE_FOLDER" >> $GITHUB_OUTPUT
       - name: snyk cache
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v2
         with:
           # OS間共有の有効化
           enableCrossOsArchive: true
@@ -43,10 +43,10 @@ jobs:
       matrix:
         value: ${{ fromJson(needs.security.outputs.output1) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@master
       - run: cd ${{ matrix.value }} && npm install
       - name: snyk restore
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           # OS間共有の有効化
           enableCrossOsArchive: true
@@ -55,9 +55,8 @@ jobs:
           # キャッシュキー（キャッシュファイル名）
           key: prod-node18-${{ github.sha }}
       - name: build cache
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v4
         with:
-          node-version: 20
           # OS間共有の有効化
           enableCrossOsArchive: true
           # キャッシュ対象のパス
@@ -68,11 +67,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: job2
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@master
       - name: build restore
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
-          node-version: 20
           # OS間共有の有効化
           enableCrossOsArchive: true
           # キャッシュ対象のパス
@@ -80,9 +78,8 @@ jobs:
           # キャッシュキー（キャッシュファイル名）
           key: prod-node18-${{ github.sha }}
       - name: snyk restore
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v2
         with:
-          node-version: 20
           # OS間共有の有効化
           enableCrossOsArchive: true
           # キャッシュ対象のパス
