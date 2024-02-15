@@ -31,7 +31,7 @@ jobs:
       - run: |
           for folder in $PACKAGE_FOLDER
           do
-            cd $PWD
+            cd /home/runner/work/test-repo1/test-repo1
             ls
             cd $folder && npm install
           done
