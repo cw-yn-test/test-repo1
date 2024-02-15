@@ -15,8 +15,6 @@ jobs:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
         with:
           command: monitor
-      - run: npm install snyk -g
-      - run: snyk monitor --dev --all-projects
       - name: package file list
         run: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/^/\//g')" 
       - name: package folder
@@ -44,4 +42,5 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: npm install snyk -g
+      - run: snyk auth f887d29d-2763-4e53-bad9-9ef3d68f186e
       - run: snyk monitor --dev --all-projects
