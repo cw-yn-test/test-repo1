@@ -43,7 +43,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Install Snyk CLI
-        run: npm install -g snyk
+        run: |
+          npm install -g snyk
+          npm install
       - name: Snyk scan and import for work
         run: snyk monitor --dev --all-projects
         env:
