@@ -39,6 +39,7 @@ jobs:
                 pip install -r requirements.txt
               fi
               popd
+            fi
           done
       - name: Snyk scan and import for work
         run: |
