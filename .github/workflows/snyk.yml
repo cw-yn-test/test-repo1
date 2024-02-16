@@ -34,7 +34,7 @@ jobs:
               npm install -g snyk
               snyk monitor --dev --all-projects
               if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
-                pip install -r requirements.txt
+                pip install -r requirements.txt --skip-unresolved
               fi
               popd
             fi
