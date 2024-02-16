@@ -28,22 +28,26 @@ jobs:
           
       - id: step1
         run: echo "test1=$PACKAGE_FOLDER" >> $GITHUB_OUTPUT
-      - name: npm install
+      - name: Snyk scan and import for work
         working-directory: ./
         run: |
           for folder in $PACKAGE_FOLDER
           do
             if [ $folder = 'services' ] || [ $folder = 'packages' ]; then
               pushd $folder && npm install
+              npm install -g snyk
+              snyk monitor --dev --all-projects
               if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
                 pip install -r requirements.txt
               fi
               popd
             fi
           done
-      - name: Snyk scan and import for work
-        run: |
-          npm install -g snyk
-          snyk monitor --dev --all-projects
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
+      # - name: Snyk scan and import for work
+      #   run: |
+      #     npm install -g snyk
+      #     snyk monitor --dev --all-projects
+      #   env:
+      #     SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
