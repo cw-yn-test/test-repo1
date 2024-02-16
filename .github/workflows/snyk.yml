@@ -34,7 +34,7 @@ jobs:
           for folder in $PACKAGE_FOLDER
           do
             pushd $folder && npm install
-            if 'x' = 'x'; then
+            if 'x' = 'x' ; then
               echo aa
             fi
             ls | grep -c requirements.txt
