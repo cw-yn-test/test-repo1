@@ -34,7 +34,7 @@ jobs:
           for folder in $PACKAGE_FOLDER
           do
             pushd $folder && npm install
-            if [$(ls | grep -c requirements.txt) -gt 0]; then
+            if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
               echo ----------------------------------------
             fi
             popd
