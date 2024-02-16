@@ -34,10 +34,9 @@ jobs:
           for folder in $PACKAGE_FOLDER
           do
             pushd $folder && npm install
-            if 'x' = 'x' ; then
+            if -n $(ls | grep -c requirements.txt) ; then
               echo aa
             fi
-            ls | grep -c requirements.txt
             popd
           done
       - name: Snyk scan and import for work
