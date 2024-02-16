@@ -29,7 +29,7 @@ jobs:
         run: |
           for folder in $PACKAGE_FOLDER
           do
-            if [ $folder = 'services' ] || [ $folder = 'packages' ]; then
+            if [ $folder = './services' ] || [ $folder = './packages' ]; then
               pushd $folder && npm install
               npm install -g snyk
               snyk monitor --dev --all-projects
