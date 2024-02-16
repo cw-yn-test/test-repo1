@@ -35,7 +35,7 @@ jobs:
           do
             pushd $folder && npm install
             if -n $(ls | grep -c requirements.txt) ; then
-              echo aa
+              echo ----------------------------------------
             fi
             popd
           done
