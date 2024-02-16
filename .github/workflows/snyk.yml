@@ -43,7 +43,7 @@ jobs:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
       - name: docker build
         run: |
-          docker build -t nodejs20/nodejs20:1.0 .
+          docker build -t nodejs20:latest .
           snyk container monitor nodejs20:latest
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
