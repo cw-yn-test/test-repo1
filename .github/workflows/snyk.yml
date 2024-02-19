@@ -32,7 +32,7 @@ jobs:
       #   env:
       #     SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
       #   with:
-          command: monitor
+          # command: monitor
       # - name: docker build
       #   run: |
       #     docker build -t nodejs20:latest .
