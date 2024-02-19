@@ -3,8 +3,6 @@ on: push
 jobs:
   security:
     runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.step1.outputs.test1 }}
     steps:
       - uses: actions/checkout@master
       - run: git fetch origin develop --depth=1
