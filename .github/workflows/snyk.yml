@@ -11,6 +11,7 @@ jobs:
           echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/.\//g')"" >> $GITHUB_ENV
       - name: Snyk scan and import for work
         run: |
+          npm install -g snyk
           for folder in $PACKAGE_FOLDER
           do
             if [ $folder = './services' ] || [ $folder = './packages' ]; then
@@ -18,11 +19,10 @@ jobs:
               if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
                 pip install -r requirements.txt
               fi
+              snyk monitor --all-projects
               popd
             fi
           done
-          npm install -g snyk
-          snyk monitor --target-reference=feature/mukai-test
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
       # - name: Run Snyk to check for vulnerabilities
