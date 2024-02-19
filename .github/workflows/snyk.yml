@@ -9,23 +9,10 @@ jobs:
       - uses: actions/checkout@master
       - run: git fetch origin develop --depth=1
       - run: pip install jc
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
-        with:
-          command: monitor
-      - name: package file list
-        run: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/^/\//g')" 
-      - name: package folder
-        run: echo "$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"
-      - name: diff package file list
-        run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/^/\//g')"
-      - name: diff package folder
-        run: echo "$(git diff --name-only origin/develop..HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/\//g')"  
       - run: |
           echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/.\//g')"" >> $GITHUB_ENV
-      - name: Snyk scan and import for work
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
         run: |
           for folder in $PACKAGE_FOLDER
           do
@@ -41,6 +28,8 @@ jobs:
           done
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
+        with:
+          command: monitor
       # - name: docker build
       #   run: |
       #     docker build -t nodejs20:latest .
