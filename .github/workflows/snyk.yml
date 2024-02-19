@@ -11,8 +11,7 @@ jobs:
       - run: pip install jc
       - run: |
           echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/.\//g')"" >> $GITHUB_ENV
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
+      - name: Snyk scan and import for work
         run: |
           for folder in $PACKAGE_FOLDER
           do
@@ -26,6 +25,10 @@ jobs:
               popd
             fi
           done
+        env:
+          SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
         with:
