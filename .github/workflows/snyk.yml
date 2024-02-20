@@ -30,6 +30,9 @@ jobs:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
       - name: Build a Docker image
         run: |
+          mkdir -p ~/.docker/cli-plugins && \
+          curl https://github.com/docker/scan-cli-plugin/releases/latest/download/docker-scan_linux_amd64 -L -s -S -o ~/.docker/cli-plugins/docker-scan &&\
+          chmod +x ~/.docker/cli-plugins/docker-scan
           docker build -t image-to-test .
           docker scan --file Dockerfile image-to-test
         env:
