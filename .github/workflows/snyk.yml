@@ -19,7 +19,6 @@ jobs:
             pushd $folder && npm install
             if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
               pip install -r requirements.txt
-              snyk monitor --file=requirements.txt
             fi
             popd
           done
