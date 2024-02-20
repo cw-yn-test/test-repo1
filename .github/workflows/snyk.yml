@@ -27,7 +27,7 @@ jobs:
         run: |
           # docker build -t my-test:latest .
           # snyk container monitor my-test:latest --file=Dockerfile
-          snyk monitor --file=Dockerfile
+          snyk container monitor --file=Dockerfile
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
