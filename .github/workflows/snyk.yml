@@ -30,7 +30,7 @@ jobs:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
       - name: Build a Docker image
         run: |
-          docker scan --version
+          docker scan --help
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
       #   run: docker build -t image-to-test .
