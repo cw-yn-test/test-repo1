@@ -39,7 +39,7 @@ jobs:
           # or you can sign up for free at https://snyk.io/login
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
         with:
-          # image: your/image-to-test
+          image: image-to-test
           args: --file=Dockerfile
           command: monitor
       # - name: Run Snyk to check for vulnerabilities
