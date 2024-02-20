@@ -29,3 +29,11 @@ jobs:
           snyk container monitor my-test:latest --file=Dockerfile
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: docker build2
+        working-directory: ./packages/work2
+        run: |
+          docker build -t my-test2:latest .
+          snyk container monitor my-test2:latest --file=Dockerfile
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
