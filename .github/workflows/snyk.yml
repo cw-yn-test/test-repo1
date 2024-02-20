@@ -26,6 +26,7 @@ jobs:
               popd
             fi
           done
+          apt-get install docker-scan-plugin
           docker build -t image-to-test .
           docker scan --file Dockerfile image-to-test
         env:
