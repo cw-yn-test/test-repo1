@@ -43,7 +43,7 @@ jobs:
         with:
           image: image-to-test
           args: --file=Dockerfile --sarif-file-output=snyk.sarif
-          command: monitor
+          # command: monitor
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
         with:
