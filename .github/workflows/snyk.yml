@@ -16,24 +16,16 @@ jobs:
       #   env:
       #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      # - name: Snyk scan and import for work
-      #   working-directory: ./
-      #   run: snyk monitor --skip-unresolved --project-name=work2
-      #   env:
-      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-      # - name: Run Snyk to check for vulnerabilities
-      #   uses: snyk/actions/node@master
-      #   env:
-      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      #   with:
-      #     command: monitor
-      #     args: --all-projects
+      - name: Snyk scan and import for work
+        working-directory: ./
+        run: snyk monitor --skip-unresolved --all-projects
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: docker build
         working-directory: ./packages/work1
         run: |
-          docker build -t nodejs20:latest .
-          snyk container monitor nodejs20:latest --file=Dockerfile
+          docker build -t my-test:latest .
+          snyk container monitor my-test:latest --file=Dockerfile
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
