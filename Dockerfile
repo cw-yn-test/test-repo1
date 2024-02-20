@@ -1,4 +1,4 @@
-FROM nodejs20
+FROM gcr.io/distroless/nodejs20
 # user should be nonroot
 USER nonroot
 
