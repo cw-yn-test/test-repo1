@@ -1,4 +1,4 @@
-FROM nodejs20:latest
+FROM nodejs20
 # user should be nonroot
 USER nonroot
 
