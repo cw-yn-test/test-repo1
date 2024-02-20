@@ -16,13 +16,16 @@ jobs:
           npm install -g snyk
           for folder in $PACKAGE_FOLDER
           do
-            pushd $folder && npm install
-            if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
-              pip install -r requirements.txt
+            if [ $folder = './services' ] || [ $folder = './packages' ]; then
+              pushd $folder && npm install
+              if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
+                pip install -r requirements.txt
+                snyk monitor --file=requirements.txt --package-manager=pip
+              fi
+              snyk monitor --dev --all-projects
+              popd
             fi
-            popd
           done
-          snyk monitor --dev --all-projects
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
       # - name: Run Snyk to check for vulnerabilities
