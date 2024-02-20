@@ -20,12 +20,13 @@ jobs:
               pushd $folder && npm install
               if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
                 pip install -r requirements.txt
+                snyk monitor --file=requirements.txt
               fi
               snyk monitor --dev --all-projects
               popd
             fi
           done
-          snyk monitor
+          snyk monitor --file=Dockerfile
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
       # - name: Run Snyk to check for vulnerabilities
