@@ -28,19 +28,19 @@ jobs:
           done
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
-    - name: Run Snyk to check Docker image for vulnerabilities
-      # Snyk can be used to break the build when it detects vulnerabilities.
-      # In this case we want to upload the issues to GitHub Code Scanning
-      continue-on-error: true
-      uses: snyk/actions/docker@master
-      env:
-        # In order to use the Snyk Action you will need to have a Snyk API token.
-        # See https://docs.snyk.io/integrations/ci-cd-integrations/github-actions-integration#getting-your-snyk-token
-        # or you can sign up for free at https://snyk.io/login
-        SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
-      with:
-        # image: your/image-to-test
-        args: --file=Dockerfile
+      - name: Run Snyk to check Docker image for vulnerabilities
+        # Snyk can be used to break the build when it detects vulnerabilities.
+        # In this case we want to upload the issues to GitHub Code Scanning
+        continue-on-error: true
+        uses: snyk/actions/docker@master
+        env:
+          # In order to use the Snyk Action you will need to have a Snyk API token.
+          # See https://docs.snyk.io/integrations/ci-cd-integrations/github-actions-integration#getting-your-snyk-token
+          # or you can sign up for free at https://snyk.io/login
+          SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
+        with:
+          # image: your/image-to-test
+          args: --file=Dockerfile
       # - name: Run Snyk to check for vulnerabilities
       #   uses: snyk/actions/node@master
       #   env:
