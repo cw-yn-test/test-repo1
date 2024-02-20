@@ -33,7 +33,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: my-test:latest
-          args: monitor
+          command: monitor
 
       # - name: docker build2
       #   working-directory: ./packages/work2
