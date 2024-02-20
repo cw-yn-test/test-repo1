@@ -1,0 +1,45 @@
+{
+    "name": "business-service-template",
+    "version": "1.0.0",
+    "description": "A template for creating new Business Services",
+    "main": "index.js",
+    "repository": "git@bitbucket.org:dsv_developers/microservice.git",
+    "config": {
+        "package-lock": false
+    },
+    "scripts": {
+        "test": "RANDOM_PORT=true jest",
+        "lint": "eslint .",
+        "lintf": "eslint . --fix",
+        "build-lerna": "npm run build --prefix=../../",
+        "build-docker": "pwsh ../../build-service.ps1 -ServiceName $npm_package_name -ServiceVersion $npm_package_version ",
+        "clean-docker": "rm -rf ../../bin/build/$npm_package_name; docker rmi -f daikin/$npm_package_name:$npm_package_version",
+        "start-docker": "docker network create dosatsu-net; docker run --rm --network dosatsu-net --name daikin-$npm_package_name-$npm_package_version -p 80:80 daikin/$npm_package_name:$npm_package_version /bin/sh -c \"SERVICE_PORT=80 RANDOM_PORT=false CONTAINER_MODE=true DB_HOST='host.docker.internal' DB_PORT=9042 node services/service/index.js\"",
+        "stop-docker": "docker stop -t 3 daikin-$npm_package_name-$npm_package_version",
+        "start": "RANDOM_PORT=true DB_TYPE=psql node index.js",
+        "// deploy": "------------------------------------------------------------------------------------------------------------------",
+        "create-ms": "npm run build-docker && npm run create-ms-business-service-template --prefix=../../../deploy -- -configName local-k3s",
+        "delete-ms": "npm run delete-ms --prefix=../../../deploy -- -configName local-k3s",
+        "view-ms": "npm run view-ms --prefix=../../../deploy -- -configName local-k3s",
+        "// security": "------------------------------------------------------------------------------------------------------------------",
+        "sca": "npm run sca --prefix=${npm_config_deploy:-../../../deploy} -- -configName local-k3s -SourcePath $PWD --ApiToken $BLACKDUCK_API_TOKEN"
+    },
+    "keywords": [
+        "zen"
+    ],
+    "author": "Daikin U.S. Corporation <contact@dsv.daikin.com> (https://www.dsv.daikin.com/)",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@daikin-zen/service": "*",
+        "@daikin-zen/utility": "*"
+    },
+    "devDependencies": {
+        "supertest": "^6.3.3",
+        "uuid": "^9.0.0",
+        "@daikin-zen/security-mock": "*"
+    },
+    "pre-commit": [
+        "build"
+    ]
+}

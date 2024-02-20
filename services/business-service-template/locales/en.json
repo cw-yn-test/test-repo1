@@ -1,0 +1,5 @@
+{
+    "error.existing.contact": "Contact with email: {0} already existing",
+    "error.invalid.contact": "Contact with Id: {0} does not exist",
+    "error.invalid.customer": "Customer with Id: {0} does not exist"
+}
