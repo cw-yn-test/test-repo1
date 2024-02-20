@@ -41,6 +41,7 @@ jobs:
         with:
           # image: your/image-to-test
           args: --file=Dockerfile
+          command: monitor
       # - name: Run Snyk to check for vulnerabilities
       #   uses: snyk/actions/node@master
       #   env:
