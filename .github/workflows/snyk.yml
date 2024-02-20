@@ -42,7 +42,7 @@ jobs:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
         with:
           image: image-to-test
-          args: --file=Dockerfile
+          args: --file=Dockerfile --sarif-file-output=snyk.sarif
           command: monitor
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
