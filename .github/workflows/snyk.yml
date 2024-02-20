@@ -25,11 +25,14 @@ jobs:
       - name: docker build
         working-directory: ./packages/work1
         run: |
-          # docker build -t my-test:latest .
-          # snyk container monitor my-test:latest --file=Dockerfile
-          snyk container monitor --file=Dockerfile
+          docker build -t my-test:latest .
+
+      - name: Run Snyk to check Docker image for vulnerabilities
+        uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: my-test:latest
 
       # - name: docker build2
       #   working-directory: ./packages/work2
