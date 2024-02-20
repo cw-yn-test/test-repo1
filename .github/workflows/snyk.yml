@@ -16,24 +16,25 @@ jobs:
       #   env:
       #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      - name: Snyk scan and import for work
-        working-directory: ./
-        run: snyk monitor --skip-unresolved --all-projects
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      # - name: Snyk scan and import for work
+      #   working-directory: ./
+      #   run: snyk monitor --skip-unresolved --all-projects
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: docker build
         working-directory: ./packages/work1
         run: |
-          docker build -t my-test:latest .
-          snyk container monitor my-test:latest --project-name="./packages/work1/Dockerfile"
+          # docker build -t my-test:latest .
+          # snyk container monitor my-test:latest --file=Dockerfile
+          snyk monitor --file=Dockerfile
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      - name: docker build2
-        working-directory: ./packages/work2
-        run: |
-          docker build -t my-test2:latest .
-          snyk container monitor my-test2:latest
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      # - name: docker build2
+      #   working-directory: ./packages/work2
+      #   run: |
+      #     docker build -t my-test2:latest .
+      #     snyk container monitor my-test2:latest --file=Dockerfile
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
