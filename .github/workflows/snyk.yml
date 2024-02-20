@@ -44,6 +44,10 @@ jobs:
           image: image-to-test
           args: --file=Dockerfile
           command: monitor
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
       # - name: Run Snyk to check for vulnerabilities
       #   uses: snyk/actions/node@master
       #   env:
