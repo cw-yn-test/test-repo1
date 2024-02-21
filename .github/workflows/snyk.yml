@@ -18,7 +18,7 @@ jobs:
           do
             if [[ $folder = './services'* ]] || [[ $folder = './packages'* ]]; then
               echo $folder
-              pushd $folder
+              pushd $folder && npm install
               if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
                 pip install -r requirements.txt
                 snyk monitor --file=requirements.txt --package-manager=pip
@@ -28,6 +28,7 @@ jobs:
                 yarn
                 ls
               fi
+              snyk monitor --dev --all-projects
               popd
             fi
           done
