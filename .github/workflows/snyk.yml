@@ -24,6 +24,7 @@ jobs:
                 snyk monitor --file=requirements.txt --package-manager=pip
               fi
               if [[ $folder = './services'* ]]; then
+                npm install -g yarn
                 yarn
                 ls
               fi
