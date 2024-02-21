@@ -18,7 +18,6 @@ jobs:
           do
             if [[ $folder = './services'* ]] || [[ $folder = './packages'* ]]; then
               echo $folder
-              npm config set registry http://registry.npmjs.org/
               pushd $folder && npm install
               if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
                 pip install -r requirements.txt
