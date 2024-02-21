@@ -16,7 +16,7 @@ jobs:
           npm install -g snyk
           for folder in $PACKAGE_FOLDER
           do
-            if [[ $folder = './services'* ]] || [[ $folder = './packages'* ]]; then
+            if [[ $folder = './packages'* ]]; then
               echo $folder
               pushd $folder && npm install
               if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
