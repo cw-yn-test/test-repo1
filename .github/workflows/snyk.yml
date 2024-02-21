@@ -18,7 +18,7 @@ jobs:
           do
             if [[ $folder = './services'* ]] || [[ $folder = './packages'* ]]; then
               echo $folder
-              pushd $folder && npm install
+              pushd $folder && npm install --registry=https://registry.npmjs.org
               if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
                 pip install -r requirements.txt
                 snyk monitor --file=requirements.txt --package-manager=pip
@@ -32,9 +32,9 @@ jobs:
               popd
             fi
           done
-        with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
+        # with:
+        #   node-version: '16.x'
+        #   registry-url: 'https://registry.npmjs.org'
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
       # - name: Build a Docker image
