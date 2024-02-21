@@ -1,39 +1,31 @@
-name: Example workflow for Node using Snyk
-on: push
-jobs:
-  security:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+# name: Example workflow for Node using Snyk
+# on: push
+# jobs:
+#   security:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
 
-      - name: Install Snyk CLI
-        run: npm install -g snyk
+#       - name: Install Snyk CLI
+#         run: npm install -g snyk
 
-      # - name: Snyk scan and import for work
-      #   working-directory: ./packages/src
-      #   run: snyk monitor -skip-unresolved --project-name-prefix=./packages/src
-      #   env:
-      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#       # - name: Snyk scan and import for work
+#       #   working-directory: ./packages/src
+#       #   run: snyk monitor -skip-unresolved --project-name-prefix=./packages/src
+#       #   env:
+#       #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      # - name: Snyk scan and import for work
-      #   working-directory: ./
-      #   run: snyk monitor --skip-unresolved --all-projects
-      #   env:
-      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#       # - name: Snyk scan and import for work
+#       #   working-directory: ./
+#       #   run: snyk monitor --skip-unresolved --all-projects
+#       #   env:
+#       #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      - name: docker build
-        working-directory: ./packages/work1
-        run: |
-          docker build -t cw-yn-test/test-repo1:latest .
-          snyk container monitor cw-yn-test/test-repo1:latest --file=Dockerfile
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-      # - name: docker build2
-      #   working-directory: ./packages/work2
-      #   run: |
-      #     docker build -t my-test2:latest .
-      #     snyk container monitor my-test2:latest --file=Dockerfile
-      #   env:
-      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#       - name: docker build
+#         working-directory: ./packages/work1
+#         run: |
+#           docker build -t cw-yn-test/test-repo1:latest .
+#           snyk container monitor cw-yn-test/test-repo1:latest --file=Dockerfile
+#         env:
+#           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

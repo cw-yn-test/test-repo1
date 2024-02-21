@@ -1,0 +1,23 @@
+name: Example workflow for Node using Snyk
+on: push
+jobs:
+  apps_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # - name: Generate a token
+      #   id: generate_token
+      #   uses: actions/create-github-app-token@v1
+      #   with:
+      #     app-id: ${{ secrets.APP_ID }}
+      #     private-key: ${{ secrets.APP_PRIVATE_KEY }}
+      #     owner: ${{ github.repository_owner }}
+
+      - name: Checkout Deploy Repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'cw-yn-test/test-repo-10'
+          # token: ${{ steps.generate_token.outputs.token }}
+          path: 'test-repo-10'
