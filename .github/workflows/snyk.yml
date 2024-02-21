@@ -28,7 +28,6 @@ jobs:
                 yarn
                 ls
               fi
-              snyk monitor --dev --all-projects
               popd
             fi
           done
