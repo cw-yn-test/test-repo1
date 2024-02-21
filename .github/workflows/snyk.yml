@@ -16,7 +16,7 @@ jobs:
           npm install -g snyk
           for folder in $PACKAGE_FOLDER
           do
-            if [[ $folder = './packages'* ]]; then
+            if [[ $folder = './services'* ]] || [[ $folder = './packages'* ]]; then
               echo $folder
               pushd $folder && npm install
               if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
@@ -25,7 +25,6 @@ jobs:
               fi
               if [[ $folder = './services'* ]]; then
                 echo yarn
-                npm install -g yarn
                 yarn
                 ls
               fi
