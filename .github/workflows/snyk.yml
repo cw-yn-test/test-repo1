@@ -25,7 +25,7 @@ jobs:
               fi
               if [[ $folder = './services'* ]]; then
                 echo yarn
-                yarn
+                yarn --registry=https://registry.npmjs.org
                 ls
               fi
               snyk monitor --dev --all-projects
