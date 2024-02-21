@@ -25,7 +25,8 @@ jobs:
               fi
               if [[ $folder = './services'* ]]; then
                 echo yarn
-                yarn config set registry https://registry.npmjs.org
+                yarn config set registry 'https://registry.npmjs.org/'
+                yarn config get registry
                 yarn
                 ls
               fi
