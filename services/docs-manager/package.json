@@ -1,0 +1,65 @@
+{
+    "name": "docs-manager",
+    "version": "1.0.0",
+    "description": "API document Service",
+    "main": "index.js",
+    "repository": "git@bitbucket.org:dsv_developers/microservice.git",
+    "config": {
+        "package-lock": false
+    },
+    "scripts": {
+        "build-lerna": "npm run build --prefix=../../",
+        "build-docker": "sh ../../tools/scripts/build/run-in-container.sh ../../build.sh $npm_package_name $npm_package_name:$npm_package_version",
+        "clean-docker": "rm -rf ../../bin/build/$npm_package_name; docker rmi -f daikin/$npm_package_name:$npm_package_version",
+        "start-docker": "docker network create dosatsu-net; docker run --rm --network dosatsu-net --name daikin-$npm_package_name-$npm_package_version -p 80:80 daikin/$npm_package_name:$npm_package_version /bin/sh -c \"SERVICE_PORT=80 RANDOM_PORT=false CONTAINER_MODE=true DB_HOST='host.docker.internal' DB_PORT=9042 node services/service/index.js\"",
+        "stop-docker": "docker stop -t 3 daikin-$npm_package_name-$npm_package_version",
+        "start": "npm run build-mkdocs && npm run build-storybook && RANDOM_PORT=true node index.js",
+        "build-mkdocs": "cd apidocs; mkdocs build; cd ..;",
+        "build-storybook": "lerna run build-storybook --scope=@daikin-zen/design-system",
+        "// deploy": "------------------------------------------------------------------------------------------------------------------",
+        "create-ms": "npm run build-docker && npm run create-ms-docs-manager --prefix=../../../deploy -- -configName local-k3s",
+        "delete-ms": "npm run delete-ms-docs-manager --prefix=../../../deploy -- -configName local-k3s",
+        "view-ms": "npm run view-ms-docs-manager --prefix=../../../deploy -- -configName local-k3s",
+        "// security": "------------------------------------------------------------------------------------------------------------------",
+        "sca": "npm run sca  --prefix=${npm_config_deploy:-../../../deploy} -- -configName local-k3s -SourcePath $PWD --ApiToken $BLACKDUCK_API_TOKEN"
+    },
+    "nx": {
+        "namedInputs": {
+            "default": [
+                "{projectRoot}/**/*"
+            ],
+            "mkdocs-production": [
+                "{projectRoot}/apidocs/**/*",
+                "!{projectRoot}/apidocs/site/**/*",
+                "!{projectRoot}/apidocs/README.md"
+            ]
+        },
+        "targets": {
+            "build-mkdocs": {
+                "inputs": [
+                    "mkdocs-production"
+                ],
+                "outputs": [
+                    "{projectRoot}/apidocs/site"
+                ]
+            }
+        }
+    },
+    "keywords": [
+        "zen",
+        "api"
+    ],
+    "author": "Daikin U.S. Corporation <contact@dsv.daikin.com> (https://www.dsv.daikin.com/)",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@daikin-zen/service": "*",
+        "@daikin-zen/design-system": "*",
+        "koa-mount": "^4.0.0",
+        "koa-static": "^5.0.0"
+    },
+    "devDependencies": {},
+    "pre-commit": [
+        "build"
+    ]
+}

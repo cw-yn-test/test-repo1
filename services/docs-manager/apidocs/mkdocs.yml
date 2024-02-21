@@ -1,0 +1,110 @@
+site_name: "Dosatsu: API Documentation"
+logout_url: "/docs/logout"
+
+nav:
+        - Introduction: index.md
+        - User Authentication & Authorization: userAuth.md
+        - Platform API:
+                  - Data Consumer:
+                            - "Queries": "dataConsumer/queries.md"
+                            - "Mutations": "dataConsumer/mutations.md"
+                            - "Objects": "dataConsumer/objects.md"
+
+                  - Data Management:
+                            - "Queries": "dataManagement/queries.md"
+                            - "Mutations": "dataManagement/mutations.md"
+                            - "Objects": "dataManagement/objects.md"
+                            - "Interfaces": "dataManagement/interfaces.md"
+                            - "Enums": "dataManagement/enums.md"
+
+                  - Equipment Management:
+                            - Equipment Type Operations:
+                                      - "Queries": "equipmentManagement/equipmentTypeQueries.md"
+                                      - "Mutations": "equipmentManagement/equipmentTypeMutations.md"
+                                      - "Objects": "equipmentManagement/equipmentTypeObjects.md"
+                                      - "Interfaces": "equipmentManagement/equipmentTypeInterfaces.md"
+                                      - "Enums": "equipmentManagement/equipmentTypeEnums.md"
+
+                            - Equipment Operations:
+                                      - "Queries": "equipmentManagement/equipmentQueries.md"
+                                      - "Mutations": "equipmentManagement/equipmentMutations.md"
+                                      - "Objects": "equipmentManagement/equipmentObjects.md"
+                                      - "Interfaces": "equipmentManagement/equipmentInterfaces.md"
+                                      - "Enums": "equipmentManagement/equipmentEnums.md"
+
+                  - IO Connection Management:
+                            - IO Connection Operations:
+                                      - "Queries": "ioConnectionManagement/ioConnectionQueries.md"
+                                      - "Mutations": "ioConnectionManagement/ioConnectionMutations.md"
+                                      - "Objects": "ioConnectionManagement/ioConnectionObjects.md"
+                                      - "Interfaces": "ioConnectionManagement/ioConnectionInterfaces.md"
+                                      - "Enums": "ioConnectionManagement/ioConnectionEnums.md"
+
+                  - Location Management:
+                            - "Queries": "locationManagement/queries.md"
+                            - "Mutations": "locationManagement/mutations.md"
+                            - "Objects": "locationManagement/objects.md"
+                            - "Enums": "locationManagement/enums.md"
+
+                  - Object Management:
+                            - "Objects": "objectManagement/objects.md"
+                            - "Uploads": "objectManagement/uploads.md"
+                            - "Contents": "objectManagement/contents.md"
+
+                  - Organization Management:
+                            - "Queries": "organizationManagement/queries.md"
+                            - "Mutations": "organizationManagement/mutations.md"
+                            - "Objects": "organizationManagement/objects.md"
+                            - "Enums": "organizationManagement/enums.md"
+
+                  - Parser Management:
+                            - "Queries": "parserManagement/queries.md"
+                            - "Mutations": "parserManagement/mutations.md"
+                            - "Objects": "parserManagement/objects.md"
+                            - "Enums": "parserManagement/enums.md"
+
+                  - Project Management:
+                            - "Queries": "projectManagement/queries.md"
+                            - "Mutations": "projectManagement/mutations.md"
+                            - "Objects": "projectManagement/objects.md"
+                            - "Interfaces": "projectManagement/interfaces.md"
+                            - "Enums": "projectManagement/enums.md"
+
+                  - System Management:
+                            - "Queries": "system/systemQueries.md"
+                            - "Objects": "system/systemObjects.md"
+
+                  - User Management:
+                            - "Queries": "userManagement/userQueries.md"
+                            - "Objects": "userManagement/userObjects.md"
+
+                  # - Locix:
+                  #       - 'Queries': 'locix/queries.md'
+                  #       - 'Mutations': 'locix/mutations.md'
+                  #       - 'Objects': 'locix/objects.md'
+
+        - Data API:
+                  - Posting Data: "postingData.md"
+
+theme:
+        name: material
+        custom_dir: "custom_theme"
+        palette:
+                primary: "blue"
+                accent: "light blue"
+        logo: images/logo.jpg
+        favicon: images/favicon.ico
+
+extra_css:
+        - stylesheets/extra.css
+
+markdown_extensions:
+        - pymdownx.superfences
+        - pymdownx.tabbed:
+                  alternate_style: true
+        - admonition
+        - toc:
+                  permalink: true
+                  toc_depth: 1-4
+
+use_directory_urls: false
