@@ -25,6 +25,7 @@ jobs:
               fi
               if [[ $folder = './services'* ]]; then
                 yarn
+                ls
               fi
               snyk monitor --dev --all-projects
               popd
