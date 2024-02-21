@@ -53,7 +53,6 @@
     "license": "UNLICENSED",
     "private": true,
     "dependencies": {
-        "@daikin-zen/service": "*",
         "koa-mount": "^4.0.0",
         "koa-static": "^5.0.0"
     },
