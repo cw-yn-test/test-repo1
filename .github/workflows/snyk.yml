@@ -11,10 +11,6 @@ jobs:
       - run: pip install jc
       - run: |
           echo "PACKAGE_FOLDER="$(git ls-tree --name-only -r HEAD | grep package.json | sed -e 's/\/package.json//' -e 's/package.json//' -e 's/^/.\//g')"" >> $GITHUB_ENV
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
       - name: Snyk scan and import for work
         run: |
           npm install -g snyk
@@ -36,6 +32,9 @@ jobs:
               popd
             fi
           done
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
         env:
           SNYK_TOKEN: a7238f10-86dc-4b42-b2ff-a353ac4af51f
       # - name: Build a Docker image
