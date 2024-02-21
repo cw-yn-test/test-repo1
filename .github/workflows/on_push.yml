@@ -15,9 +15,15 @@ jobs:
       #     private-key: ${{ secrets.APP_PRIVATE_KEY }}
       #     owner: ${{ github.repository_owner }}
 
-      - name: Checkout Deploy Repository
+      - name: Checkout test-repo-10 Repository
         uses: actions/checkout@v4
         with:
           repository: 'cw-yn-test/test-repo-10'
           # token: ${{ steps.generate_token.outputs.token }}
           path: 'test-repo-10'
+
+      - name: cat
+        shell: bash
+        working-directory: test-repo-10
+        run: |
+          cat README.md
