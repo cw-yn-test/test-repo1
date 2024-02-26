@@ -18,9 +18,13 @@ jobs:
           do
             if [[ $folder = './services'* ]] || [[ $folder = './packages'* ]]; then
               echo $folder && pushd $folder
+
+              # @daikin-zenでgrepして対象のKey名を配列に格納
               array=($(cat package.json | jq '.dependencies,.devDependencies | keys' | grep @daikin-zen | sed -e 's/,//'))
+
               for del_package in ${array[@]}
               do
+                  # key名から対象の要素を削除してpackage.jsonを上書き
                   eval "cat package.json | jq 'del(.dependencies."$del_package",.devDependencies."$del_package")' > tmp && mv tmp package.json"
               done 
               cat package.json
