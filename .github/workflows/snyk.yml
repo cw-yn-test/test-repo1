@@ -23,6 +23,7 @@ jobs:
               do
                   eval "cat package.json | jq 'del(.dependencies."$del_package")' > tmp && mv tmp package.json"
               done 
+              cat package.json
               npm install
               if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
                 pip install -r requirements.txt
