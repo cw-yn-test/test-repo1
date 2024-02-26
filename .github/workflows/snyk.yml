@@ -18,10 +18,10 @@ jobs:
           do
             if [[ $folder = './services'* ]] || [[ $folder = './packages'* ]]; then
               echo $folder && pushd $folder
-              array=($(cat package.json | jq '.dependencies | keys' | grep @daikin-zen | sed -e 's/,//'))
+              array=($(cat package.json | jq '.dependencies,.devDependencies | keys' | grep @daikin-zen | sed -e 's/,//'))
               for del_package in ${array[@]}
               do
-                  eval "cat package.json | jq 'del(.dependencies."$del_package")' > tmp && mv tmp package.json"
+                  eval "cat package.json | jq 'del(.dependencies."$del_package",.devDependencies."$del_package")' > tmp && mv tmp package.json"
               done 
               cat package.json
               npm install

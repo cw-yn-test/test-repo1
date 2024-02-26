@@ -58,7 +58,9 @@
         "koa-mount": "^4.0.0",
         "koa-static": "^5.0.0"
     },
-    "devDependencies": {},
+    "devDependencies": {
+        "@daikin-zen/service": "*"
+    },
     "pre-commit": [
         "build"
     ]
