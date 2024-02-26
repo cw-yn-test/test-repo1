@@ -21,7 +21,7 @@ jobs:
               array=($(cat package.json | jq '.dependencies | keys' | grep @daikin-zen | sed -e 's/,//'))
               for del_package in ${array[@]}
               do
-                  cat package.json | jq 'del(.dependencies."$del_package")'
+                  eval "cat package.json | jq 'del(.dependencies."$del_package")' > tmp && mv tmp package.json"
               done 
               npm install
               if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
