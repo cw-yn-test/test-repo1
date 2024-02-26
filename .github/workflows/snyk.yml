@@ -17,18 +17,16 @@ jobs:
           for folder in $PACKAGE_FOLDER
           do
             if [[ $folder = './services'* ]] || [[ $folder = './packages'* ]]; then
-              echo $folder
-              pushd $folder && npm install
+              echo $folder && pushd $folder
+              array=($(cat package.json | jq '.dependencies | keys' | grep @daikin-zen | sed -e 's/,//'))
+              for del_package in ${array[@]}
+              do
+                  cat package.json | jq 'del(.dependencies."$del_package")'
+              done 
+              npm install
               if [ $(ls | grep -c requirements.txt) -gt 0 ]; then
                 pip install -r requirements.txt
                 snyk monitor --file=requirements.txt --package-manager=pip
-              fi
-              if [[ $folder = './services'* ]]; then
-                echo yarn
-                yarn config set registry 'https://registry.npmjs.org/'
-                yarn config get registry
-                yarn
-                ls
               fi
               snyk monitor --dev --all-projects
               popd
