@@ -16,7 +16,7 @@ jobs:
           cp -r $(pwd)/services $(pwd)/bin/build/services
           ls $(pwd)/bin/build/services
       - name: Snyk scan and import for work
-        working-directory: $(pwd)/bin/build
+        working-directory: $bin_folder
         run: |
           ls
           npm install -g snyk
