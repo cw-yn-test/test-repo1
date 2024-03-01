@@ -17,7 +17,7 @@ jobs:
           python setup.py install
           pip freeze requirements.txt
           pip install -r requirements.txt
-          snyk monitor --dev --skip-unresolved --target-reference=root
+          snyk monitor --target-reference=root
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
