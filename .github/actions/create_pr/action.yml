@@ -1,5 +1,11 @@
 name: Create PR
 
+inputs:
+  body:
+    required: true
+    type: string
+    default: ""
+
 runs:
   using: 'composite'
   steps:
@@ -14,7 +20,7 @@ runs:
       id: check_pr_exists
       shell: bash
       run: |
-        pr_title="[AMI Checker]Difference in AMI name from latest. (--->${{ env.Latest_AMI_Name }})"
+        pr_title="[AMI Checker test yamamoto]Difference in AMI name from latest. (--->${{ env.Latest_AMI_Name }})"
         pr_base_branch=${{ env.BASE_BRANCH }}
         pr_count=$(gh pr list --state open --search "${pr_title} in:title" --base $pr_base_branch | wc -l)
         if [ $pr_count -ne 0 ]; then
@@ -36,11 +42,14 @@ runs:
 
     # AMIの値を変更する
     - name: Make Changes
+      id: make_changes
       if: ${{ steps.check_pr_exists.outputs.pr_count == 0 }}
       shell: bash
       working-directory: ./work
       run: |
+        old_ami=$(jq -r '.ubuntu_ami_version' ./variables.json)
         jq '.ubuntu_ami_version="${{ env.Latest_AMI_Name }}"' ./variables.json > tmp.json && mv tmp.json ./variables.json 
+        echo "old_ami=$old_ami" >> $GITHUB_OUTPUT
 
     - name: Commit Changes
       if: ${{ steps.check_pr_exists.outputs.pr_count == 0 }}
@@ -59,4 +68,4 @@ runs:
         gh pr create
         --base ${{ steps.check_pr_exists.outputs.pr_base_branch }}
         --title '${{ steps.check_pr_exists.outputs.pr_title }}'
-        --body ""
+        --body "The ubuntu_ami_version has been updated from ${{ steps.make_changes.outputs.old_ami }} to ${{ env.Latest_AMI_Name }}."
