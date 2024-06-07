@@ -8,7 +8,7 @@ on:
 jobs:
   develop:
     name: Develop Action
-    uses: ./.github/workflows/reuse.yml
+    uses: ./.github/workflows/reuse_test.yml
     secrets: inherit
     with:
       env_name: develop
