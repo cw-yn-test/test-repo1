@@ -1,0 +1,50 @@
+name: Deploy Monitoring
+
+on:
+  workflow_call:
+
+jobs:
+  job1:
+    name: job1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: cat yaml
+        working-directory: .
+        shell: bash
+        run: |
+          echo "Hell from job1."
+  job2:
+    name: job2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: cat yaml
+        working-directory: .
+        shell: bash
+        run: |
+          echo "Hell from job2."
+  job3:
+    name: job3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: cat yaml
+        working-directory: .
+        shell: bash
+        run: |
+          echo "Hell from job3."
+  job4:
+    name: job4
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: cat yaml
+        working-directory: .
+        shell: bash
+        run: |
+          echo "Hell from job4."
