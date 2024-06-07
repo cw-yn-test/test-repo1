@@ -17,6 +17,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Good Morning
+        run: |
+          echo "Good Morning!"
+
+  greeting_need_check:
+    name: Greeting
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.env_name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Hello World
         run: |
           echo "Hello World!"
