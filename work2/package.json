@@ -2,7 +2,7 @@
     "name": "test-ops",
     "version": "1.0.0",
     "devDependencies": {
-      "@types/node": "18.14.2",
+      "@types/node": "18.19.12",
       "simple-git-hooks": "^2.8.1",
       "ts-jest": "^29.0.5",
       "ts-node": "^10.9.1",
